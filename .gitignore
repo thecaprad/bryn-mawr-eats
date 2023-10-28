@@ -1,0 +1,8 @@
+.DS_Store
+__pycache__
+*.pyc
+
+.nuxt
+node_modules
+package-lock.json
+yarn.lock
