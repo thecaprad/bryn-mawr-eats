@@ -2,6 +2,15 @@
   background-color: var(--peach);
   padding: 3rem;
   color: var(--white);
+  display: flex;
+  justify-content: space-between;
+  align-items: last baseline;
+
+  svg {
+    height: 2rem;
+    fill: var(--white);
+    cursor: pointer;
+  }
 
   a {
     font-size: 2.2rem;
@@ -14,13 +23,12 @@
       text-decoration: none;
     }
 
-    div {
-      width: 200px;
+    svg {
+      fill: var(--pink);
     }
 
-    svg {
-      height: 2rem;
-      fill: var(--pink);
+    div {
+      width: 200px;
     }
   }
 }
