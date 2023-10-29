@@ -28,6 +28,15 @@ html {
       font-size: 2rem;
     }
 
+    h2,
+    h3 {
+      font-family: var(--inter);
+    }
+
+    h2 {
+      font-size: 1rem;
+    }
+
     label {
       font-family: var(--garamond);
       // color: var(--dark-blue);
