@@ -4,45 +4,45 @@
 
 html {
   font-size: calc(var(--base-font-size) * 1px);
-  // body {
-  //   a,
-  //   span {
-  //     font-family: var(--inter);
-  //   }
+  body {
+    a,
+    span {
+      font-family: var(--inter);
+    }
 
-  //   a:link,
-  //   a:visited,
-  //   a:hover,
-  //   a:active {
-  //     color: var(--white);
-  //     text-decoration: none;
-  //   }
+    a:link,
+    a:visited,
+    a:hover,
+    a:active {
+      color: var(--white);
+      text-decoration: none;
+    }
 
-  //   a:hover {
-  //     text-decoration: underline;
-  //   }
+    a:hover {
+      text-decoration: underline;
+    }
 
-  //   h1 {
-  //     font-family: var(--garamond);
-  //     color: var(--gray-text);
-  //     font-size: 2rem;
-  //   }
+    h1 {
+      font-family: var(--garamond);
+      // color: var(--gray-text);
+      font-size: 2rem;
+    }
 
-  //   label {
-  //     font-family: var(--garamond);
-  //     color: var(--dark-blue);
-  //     font-size: 1.5rem;
-  //     font-weight: 600;
-  //   }
+    label {
+      font-family: var(--garamond);
+      // color: var(--dark-blue);
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
 
-  //   input {
-  //     font-family: var(--garamond);
-  //     color: var(--dark-blue);
-  //     font-size: 1.3rem;
+    input {
+      font-family: var(--garamond);
+      // color: var(--dark-blue);
+      font-size: 1.3rem;
 
-  //     &:focus-visible {
-  //       outline: none;
-  //     }
-  //   }
-  // }
+      &:focus-visible {
+        outline: none;
+      }
+    }
+  }
 }

@@ -1,0 +1,26 @@
+.header {
+  background-color: var(--peach);
+  padding: 3rem;
+  color: var(--white);
+
+  a {
+    font-size: 2.2rem;
+    font-weight: 800;
+    display: flex;
+    gap: 0.5rem;
+    align-items: last baseline;
+
+    &:hover {
+      text-decoration: none;
+    }
+
+    div {
+      width: 200px;
+    }
+
+    svg {
+      height: 2rem;
+      fill: var(--pink);
+    }
+  }
+}
