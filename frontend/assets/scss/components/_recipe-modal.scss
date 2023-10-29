@@ -1,0 +1,33 @@
+.recipe-modal {
+  display: flex;
+  align-items: center;
+  background: rgba(black, 0.8);
+  flex-flow: column nowrap;
+  height: 100vh;
+  left: 0;
+  overflow: auto;
+  position: fixed;
+  text-align: left;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  -webkit-overflow-scrolling: touch;
+
+  .modal {
+    display: block;
+    background: var(--white);
+    margin: auto;
+    max-width: 1200px;
+    position: relative;
+    width: 60%;
+    padding: 50px 20px;
+    text-align: center;
+
+    @media (min-width: 550px) {
+      min-width: 500px;
+    }
+    @media (min-width: 768px) {
+      padding: 80px;
+    }
+  }
+}
