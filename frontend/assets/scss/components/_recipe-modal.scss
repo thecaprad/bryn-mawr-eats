@@ -1,7 +1,7 @@
 .recipe-modal {
   display: flex;
   align-items: center;
-  background: rgba(black, 0.8);
+  background: rgba(rgb(0, 0, 0), 0.05);
   flex-flow: column nowrap;
   height: 100vh;
   left: 0;
@@ -18,16 +18,40 @@
     background: var(--white);
     margin: auto;
     max-width: 1200px;
+    max-height: 500px;
+    overflow: scroll;
     position: relative;
-    width: 60%;
+    width: 50%;
     padding: 50px 20px;
     text-align: center;
+    border-radius: 10px;
 
     @media (min-width: 550px) {
       min-width: 500px;
     }
     @media (min-width: 768px) {
-      padding: 80px;
+      padding: 40px;
+    }
+
+    .recipe-option {
+      background-color: var(--pink);
+      color: var(--white);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      margin: 0.5rem;
+      padding: 1rem;
+      font-size: 1.5rem;
+      font-weight: 500;
+      text-align: left;
+      justify-content: space-between;
+      cursor: pointer;
+
+      .info {
+        height: 2rem;
+        transform: rotate(180);
+        fill: var(--white);
+      }
     }
   }
 }

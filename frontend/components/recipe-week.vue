@@ -1,5 +1,5 @@
 <script setup>
-  const week = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+  const week = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
   const recipes = [
     {
       name: 'Zuppa Toscana',
@@ -28,7 +28,7 @@
       name: 'Easy Sesame Chicken',
       image_url: 'https://www.budgetbytes.com/wp-content/uploads/2018/07/Easy-Sesame-Chicken-V3-1200.jpg',
     },
-  ]
+  ];
 </script>
 
 <template>
