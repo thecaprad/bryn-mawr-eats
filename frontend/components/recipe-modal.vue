@@ -11,7 +11,6 @@
     'getRecipes',
     async () => {
       try {
-        console.log('hi');
         const response = await makeGetRequest('/recipes');
         const json = await response.json();
         return json;
