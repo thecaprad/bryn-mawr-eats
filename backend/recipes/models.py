@@ -27,6 +27,7 @@ class Recipe(models.Model):
   prep_time = models.IntegerField(blank=True, null=True)
   cook_time = models.IntegerField(blank=True, null=True)
   source_url = models.URLField(blank=True, null=True)
+  image_url = models.URLField(blank=True, null=True)
 
   def __str__(self):
     return self.name
