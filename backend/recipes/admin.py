@@ -30,7 +30,8 @@ class RecipeAdmin(admin.ModelAdmin):
     "name",
     "prep_time",
     "cook_time",
-    "source_url"
+    "source_url",
+    "image_url"
   )
 
 admin.site.register(Recipe, RecipeAdmin)

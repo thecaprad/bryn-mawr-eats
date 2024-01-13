@@ -2,7 +2,9 @@
   const { makeGetRequest } = useApi();
   import { storeToRefs } from 'pinia';
   import { useModalStore } from '../../stores/ModalStore';
-  const { showModal } = storeToRefs(useModalStore());
+  import { useGroceryListStore } from '../../stores/GroceryListStore';
+  const { showModal, selectedDay } = storeToRefs(useModalStore());
+  const { mealPlan } = storeToRefs(useGroceryListStore());
 
   const recipeList = ref([]);
 
@@ -26,41 +28,49 @@
     recipeList.value.push(...newRecipes);
   });
 
-  // const recipes = [
-  //   {
-  //     name: 'Zuppa Toscana',
-  //     image_url: 'https://www.budgetbytes.com/wp-content/uploads/2018/09/Zuppa-Toscana-V-1200.jpg',
-  //   },
-  //   {
-  //     name: 'Easy Vegetable Beef Soup',
-  //     image_url: 'https://www.budgetbytes.com/wp-content/uploads/2022/04/Vegetable-Beef-Soup-V3.jpg',
-  //   },
-  //   {
-  //     name: 'Takeout',
-  //   },
-  //   {
-  //     name: 'Creamy Tomato and Spinach Pasta',
-  //     image_url: 'https://www.budgetbytes.com/wp-content/uploads/2013/07/Creamy-Tomato-Spinach-Pasta-V2-bowl.jpg',
-  //   },
-  //   {
-  //     name: 'Chicken Noodle Soup',
-  //     image_url: 'https://www.budgetbytes.com/wp-content/uploads/2017/02/Homemade-Chicken-Noodle-Soup-V3-e.jpg',
-  //   },
-
-  //   {
-  //     name: 'Panic',
-  //   },
-  //   {
-  //     name: 'Easy Sesame Chicken',
-  //     image_url: 'https://www.budgetbytes.com/wp-content/uploads/2018/07/Easy-Sesame-Chicken-V3-1200.jpg',
-  //   },
-  // ];
+  const makeSelection = (recipe) => {
+    if (selectedDay.value == 'Monday') {
+      mealPlan.value.monday.recipe.name = recipe.name;
+      mealPlan.value.monday.recipe.image_url = recipe.image_url;
+      mealPlan.value.monday.recipe.id = recipe.id;
+    }
+    if (selectedDay.value == 'Tuesday') {
+      mealPlan.value.tuesday.recipe.name = recipe.name;
+      mealPlan.value.tuesday.recipe.image_url = recipe.image_url;
+      mealPlan.value.tuesday.recipe.id = recipe.id;
+    }
+    if (selectedDay.value == 'Wednesday') {
+      mealPlan.value.wednesday.recipe.name = recipe.name;
+      mealPlan.value.wednesday.recipe.image_url = recipe.image_url;
+      mealPlan.value.wednesday.recipe.id = recipe.id;
+    }
+    if (selectedDay.value == 'Thursday') {
+      mealPlan.value.thursday.recipe.name = recipe.name;
+      mealPlan.value.thursday.recipe.image_url = recipe.image_url;
+      mealPlan.value.thursday.recipe.id = recipe.id;
+    }
+    if (selectedDay.value == 'Friday') {
+      mealPlan.value.friday.recipe.name = recipe.name;
+      mealPlan.value.friday.recipe.image_url = recipe.image_url;
+      mealPlan.value.friday.recipe.id = recipe.id;
+    }
+    if (selectedDay.value == 'Saturday') {
+      mealPlan.value.saturday.recipe.name = recipe.name;
+      mealPlan.value.saturday.recipe.image_url = recipe.image_url;
+      mealPlan.value.saturday.recipe.id = recipe.id;
+    }
+    if (selectedDay.value == 'Sunday') {
+      mealPlan.value.sunday.recipe.name = recipe.name;
+      mealPlan.value.sunday.recipe.image_url = recipe.image_url;
+      mealPlan.value.sunday.recipe.id = recipe.id;
+    }
+  };
 </script>
 
 <template>
   <div class="recipe-modal" @click="showModal = false">
     <div class="modal">
-      <div class="recipe-option" v-for="recipe in recipeList" :key="recipe">
+      <div class="recipe-option" v-for="recipe in recipeList" :key="recipe" @click="makeSelection(recipe)">
         <div>{{ recipe.name }}</div>
         <SvgPanic class="info"></SvgPanic>
       </div>

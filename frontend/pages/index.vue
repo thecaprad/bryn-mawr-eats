@@ -1,7 +1,7 @@
 <script setup>
-  import { storeToRefs } from 'pinia'
-  import { useModalStore } from '../../stores/ModalStore'
-  const { showModal } = storeToRefs(useModalStore())
+  import { storeToRefs } from 'pinia';
+  import { useModalStore } from '../../stores/ModalStore';
+  const { showModal } = storeToRefs(useModalStore());
 </script>
 
 <template>
@@ -11,9 +11,3 @@
     <RecipeWeek></RecipeWeek>
   </div>
 </template>
-
-<style scoped>
-  h1 {
-    text-align: center;
-  }
-</style>
