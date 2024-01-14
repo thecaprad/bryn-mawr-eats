@@ -33,7 +33,7 @@ class Recipe(models.Model):
     return self.name
 
 class RecipeIngredient(models.Model):
-  recipe = models.ForeignKey(Recipe, blank=False, null=False, on_delete=models.CASCADE)
+  recipe = models.ForeignKey(Recipe, blank=False, null=False, on_delete=models.CASCADE, related_name='recipe_ingredients')
   grocery_item = models.ForeignKey(GroceryItem, blank=False, null=False, on_delete=models.CASCADE)
   quantity = models.FloatField(blank=False, null=False, default=1)
   unit = models.ForeignKey(IngredientUnit, blank=True, null=True, on_delete=models.SET_NULL)

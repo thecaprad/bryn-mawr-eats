@@ -25,7 +25,12 @@ class GroceryItemAdmin(admin.ModelAdmin):
 
 admin.site.register(GroceryItem, GroceryItemAdmin)
 
+class RecipeIngredientInline(admin.TabularInline):
+  model = RecipeIngredient
+  fields = ['grocery_item', 'quantity', 'unit']
+
 class RecipeAdmin(admin.ModelAdmin):
+  inlines = [RecipeIngredientInline]
   list_display = (
     "name",
     "prep_time",
