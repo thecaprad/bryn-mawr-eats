@@ -4,31 +4,26 @@
   import { useModalStore } from '../../stores/ModalStore';
 
   const { showModal } = storeToRefs(useModalStore());
-  const { mealPlan } = storeToRefs(useGroceryListStore());
+  const { mealPlan, aisles, recipeIngredients, selectedRecipeIDs } = storeToRefs(useGroceryListStore());
 
   const { makeGetRequest } = useApi();
 
-  const recipeList = ref([]);
+  const getIngredientsByAisle = (aisleName) => {
+    return Object.values(recipeIngredients.value).filter(
+      (recipeIngredient) => recipeIngredient.grocery_aisle === aisleName
+    );
+  };
 
-  // Load recipes
-  const { data: recipes } = await useLazyAsyncData(
-    'getRecipes',
-    async () => {
-      try {
-        const response = await makeGetRequest('/recipes');
-        const json = await response.json();
-        return json;
-      } catch (e) {
-        // navigateTo('/404');
-      }
-    },
-    { initialCache: false }
-  );
-
-  // Watch for response to load.
-  watch(recipes, (newRecipes) => {
-    recipeList.value.push(...newRecipes);
-  });
+  const handleCreateGroceryList = async () => {
+    const response = await makeGetRequest('/grocery-list/' + selectedRecipeIDs.value + '/');
+    if (response.ok) {
+      const json = await response.json();
+      recipeIngredients.value = json.recipe_ingredients;
+      aisles.value = json.aisles;
+      // console.log(json);
+    }
+    // console.log(response);
+  };
 </script>
 
 <template>
@@ -44,8 +39,9 @@
       <Recipe-Card :day="mealPlan.saturday.label" :recipe="mealPlan.saturday.recipe"></Recipe-Card>
       <Recipe-Card :day="mealPlan.sunday.label" :recipe="mealPlan.sunday.recipe"></Recipe-Card>
     </div>
+
     <!-- Magic wand -->
-    <button>
+    <button @click="handleCreateGroceryList">
       Create grocery list
       <svg xmlns="http://www.w3.org/2000/svg" height="16" width="18" viewBox="0 0 576 512">
         <path
@@ -53,5 +49,19 @@
         />
       </svg>
     </button>
+
+    <!-- Grocery Aisles -->
+    <h2>Aisles</h2>
+    <div class="aisles">
+      <!-- {{ recipeIngredients }} -->
+      <div class="aisle" v-for="aisle in aisles" :key="aisle">
+        <h3>{{ aisle }}</h3>
+        <div v-for="ingredient in getIngredientsByAisle(aisle)" :key="ingredient" class="ingredient">
+          <span class="name">{{ ingredient.name }}</span>
+          <span>{{ ingredient.quantity }}</span>
+          <span v-if="ingredient.unit != ''">{{ ingredient.unit }}</span>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
