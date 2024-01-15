@@ -74,7 +74,26 @@ export const useGroceryListStore = defineStore('GroceryListStore', () => {
   );
 
   const aisles = ref([]);
+  // Persist and retrieve aisles
+  if (localStorage.getItem('useAisles')) {
+    aisles.value = JSON.parse(localStorage.getItem('useAisles'));
+  }
+
+  watch(aisles, (newAisles) => {
+    console.log(newAisles);
+    localStorage.setItem('useAisles', JSON.stringify(newAisles));
+  });
+
   const recipeIngredients = ref([]);
+  // Persist and retrieve recipe ingredients
+  if (localStorage.getItem('useRecipeIngredients')) {
+    recipeIngredients.value = JSON.parse(localStorage.getItem('useRecipeIngredients'));
+  }
+
+  watch(recipeIngredients, (newRecipeIngredients) => {
+    console.log(newRecipeIngredients);
+    localStorage.setItem('useRecipeIngredients', JSON.stringify(newRecipeIngredients));
+  });
 
   const selectedRecipeIDs = computed(() => {
     let result = [];
