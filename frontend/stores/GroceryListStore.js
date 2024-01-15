@@ -1,104 +1,112 @@
 import { defineStore } from 'pinia';
-import { useLocalStorage } from '@vueuse/core';
 
-export const useGroceryListStore = defineStore(
-  'GroceryListStore',
-  () => {
-    const mealPlan = ref({
-      monday: {
-        recipe: {
-          name: '',
-          image_url: '',
-          id: null,
-        },
-        label: 'Monday',
+export const useGroceryListStore = defineStore('GroceryListStore', () => {
+  const mealPlan = ref({
+    monday: {
+      recipe: {
+        name: '',
+        image_url: '',
+        id: null,
       },
-      tuesday: {
-        recipe: {
-          name: '',
-          image_url: '',
-          id: null,
-        },
-        label: 'Tuesday',
+      label: 'Monday',
+    },
+    tuesday: {
+      recipe: {
+        name: '',
+        image_url: '',
+        id: null,
       },
-      wednesday: {
-        recipe: {
-          name: '',
-          image_url: '',
-          id: null,
-        },
-        label: 'Wednesday',
+      label: 'Tuesday',
+    },
+    wednesday: {
+      recipe: {
+        name: '',
+        image_url: '',
+        id: null,
       },
-      thursday: {
-        recipe: {
-          name: '',
-          image_url: '',
-          id: null,
-        },
-        label: 'Thursday',
+      label: 'Wednesday',
+    },
+    thursday: {
+      recipe: {
+        name: '',
+        image_url: '',
+        id: null,
       },
-      friday: {
-        recipe: {
-          name: '',
-          image_url: '',
-          id: null,
-        },
-        label: 'Friday',
+      label: 'Thursday',
+    },
+    friday: {
+      recipe: {
+        name: '',
+        image_url: '',
+        id: null,
       },
-      saturday: {
-        recipe: {
-          name: '',
-          image_url: '',
-          id: null,
-        },
-        label: 'Saturday',
+      label: 'Friday',
+    },
+    saturday: {
+      recipe: {
+        name: '',
+        image_url: '',
+        id: null,
       },
-      sunday: {
-        recipe: {
-          name: '',
-          image_url: '',
-          id: null,
-        },
-        label: 'Sunday',
+      label: 'Saturday',
+    },
+    sunday: {
+      recipe: {
+        name: '',
+        image_url: '',
+        id: null,
       },
-    });
+      label: 'Sunday',
+    },
+  });
 
-    const aisles = ref([]);
-    const recipeIngredients = ref([]);
+  // Persist and retrieve mealPlan
+  if (localStorage.getItem('useMealPlan')) {
+    mealPlan.value = JSON.parse(localStorage.getItem('useMealPlan'));
+  }
 
-    const selectedRecipeIDs = computed(() => {
-      let result = [];
-      if (mealPlan.value.monday.recipe.id && !result.includes(mealPlan.value.monday.recipe.id)) {
-        result.push(mealPlan.value.monday.recipe.id);
-      }
-      if (mealPlan.value.tuesday.recipe.id && !result.includes(mealPlan.value.tuesday.recipe.id)) {
-        result.push(mealPlan.value.tuesday.recipe.id);
-      }
-      if (mealPlan.value.wednesday.recipe.id && !result.includes(mealPlan.value.wednesday.recipe.id)) {
-        result.push(mealPlan.value.wednesday.recipe.id);
-      }
-      if (mealPlan.value.thursday.recipe.id && !result.includes(mealPlan.value.thursday.recipe.id)) {
-        result.push(mealPlan.value.thursday.recipe.id);
-      }
-      if (mealPlan.value.friday.recipe.id && !result.includes(mealPlan.value.friday.recipe.id)) {
-        result.push(mealPlan.value.friday.recipe.id);
-      }
-      if (mealPlan.value.saturday.recipe.id && !result.includes(mealPlan.value.saturday.recipe.id)) {
-        result.push(mealPlan.value.saturday.recipe.id);
-      }
-      if (mealPlan.value.sunday.recipe.id && !result.includes(mealPlan.value.sunday.recipe.id)) {
-        result.push(mealPlan.value.sunday.recipe.id);
-      }
+  watch(
+    mealPlan.value,
+    (newMealPlan) => {
+      localStorage.setItem('useMealPlan', JSON.stringify(newMealPlan));
+    },
+    { deep: true }
+  );
 
-      return result.join(',');
-    });
+  const aisles = ref([]);
+  const recipeIngredients = ref([]);
 
-    return {
-      mealPlan,
-      aisles,
-      recipeIngredients,
-      selectedRecipeIDs,
-    };
-  },
-  { persist: true }
-);
+  const selectedRecipeIDs = computed(() => {
+    let result = [];
+    if (mealPlan.value.monday.recipe.id && !result.includes(mealPlan.value.monday.recipe.id)) {
+      result.push(mealPlan.value.monday.recipe.id);
+    }
+    if (mealPlan.value.tuesday.recipe.id && !result.includes(mealPlan.value.tuesday.recipe.id)) {
+      result.push(mealPlan.value.tuesday.recipe.id);
+    }
+    if (mealPlan.value.wednesday.recipe.id && !result.includes(mealPlan.value.wednesday.recipe.id)) {
+      result.push(mealPlan.value.wednesday.recipe.id);
+    }
+    if (mealPlan.value.thursday.recipe.id && !result.includes(mealPlan.value.thursday.recipe.id)) {
+      result.push(mealPlan.value.thursday.recipe.id);
+    }
+    if (mealPlan.value.friday.recipe.id && !result.includes(mealPlan.value.friday.recipe.id)) {
+      result.push(mealPlan.value.friday.recipe.id);
+    }
+    if (mealPlan.value.saturday.recipe.id && !result.includes(mealPlan.value.saturday.recipe.id)) {
+      result.push(mealPlan.value.saturday.recipe.id);
+    }
+    if (mealPlan.value.sunday.recipe.id && !result.includes(mealPlan.value.sunday.recipe.id)) {
+      result.push(mealPlan.value.sunday.recipe.id);
+    }
+
+    return result.join(',');
+  });
+
+  return {
+    mealPlan,
+    aisles,
+    recipeIngredients,
+    selectedRecipeIDs,
+  };
+});
