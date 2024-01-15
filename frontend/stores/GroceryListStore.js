@@ -97,25 +97,25 @@ export const useGroceryListStore = defineStore('GroceryListStore', () => {
 
   const selectedRecipeIDs = computed(() => {
     let result = [];
-    if (mealPlan.value.monday.recipe.id && !result.includes(mealPlan.value.monday.recipe.id)) {
+    if (mealPlan.value.monday.recipe.id) {
       result.push(mealPlan.value.monday.recipe.id);
     }
-    if (mealPlan.value.tuesday.recipe.id && !result.includes(mealPlan.value.tuesday.recipe.id)) {
+    if (mealPlan.value.tuesday.recipe.id) {
       result.push(mealPlan.value.tuesday.recipe.id);
     }
-    if (mealPlan.value.wednesday.recipe.id && !result.includes(mealPlan.value.wednesday.recipe.id)) {
+    if (mealPlan.value.wednesday.recipe.id) {
       result.push(mealPlan.value.wednesday.recipe.id);
     }
-    if (mealPlan.value.thursday.recipe.id && !result.includes(mealPlan.value.thursday.recipe.id)) {
+    if (mealPlan.value.thursday.recipe.id) {
       result.push(mealPlan.value.thursday.recipe.id);
     }
-    if (mealPlan.value.friday.recipe.id && !result.includes(mealPlan.value.friday.recipe.id)) {
+    if (mealPlan.value.friday.recipe.id) {
       result.push(mealPlan.value.friday.recipe.id);
     }
-    if (mealPlan.value.saturday.recipe.id && !result.includes(mealPlan.value.saturday.recipe.id)) {
+    if (mealPlan.value.saturday.recipe.id) {
       result.push(mealPlan.value.saturday.recipe.id);
     }
-    if (mealPlan.value.sunday.recipe.id && !result.includes(mealPlan.value.sunday.recipe.id)) {
+    if (mealPlan.value.sunday.recipe.id) {
       result.push(mealPlan.value.sunday.recipe.id);
     }
 

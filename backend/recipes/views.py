@@ -24,16 +24,13 @@ class GroceryListView(views.APIView):
                         aisles.append(ri.grocery_item.grocery_aisle.name)
 
                     # Handle ingredients
-                    if ri.id in recipe_ingredients:
-                        pass
-                    else:
-                        recipe_ingredients[ri.id] = {
-                            "id": ri.grocery_item.id,
-                            "grocery_aisle": ri.grocery_item.grocery_aisle.name,
-                            "name": ri.grocery_item.name,
-                            "quantity": ri.quantity,
-                            "unit": ri.unit.name if ri.unit else ''
-                        }
+                    recipe_ingredients[ri.id] = {
+                        "id": ri.grocery_item.id,
+                        "grocery_aisle": ri.grocery_item.grocery_aisle.name,
+                        "name": ri.grocery_item.name,
+                        "quantity": ri.quantity,
+                        "unit": ri.unit.name if ri.unit else ''
+                    }
             except Exception:
                 pass
         return JsonResponse({"recipe_ids": recipe_ids, "recipe_ingredients": recipe_ingredients, "aisles": aisles})
