@@ -3,7 +3,7 @@
   import { useGroceryListStore } from '../../stores/GroceryListStore';
   import { useModalStore } from '../../stores/ModalStore';
 
-  const { showModal } = storeToRefs(useModalStore());
+  const { showModal, showUnitConversionModal, neededConversionUnits } = storeToRefs(useModalStore());
   const { mealPlan, aisles, recipeIngredients, selectedRecipeIDs } = storeToRefs(useGroceryListStore());
 
   const { makeGetRequest } = useApi();
@@ -18,8 +18,15 @@
     const response = await makeGetRequest('/grocery-list/' + selectedRecipeIDs.value + '/');
     if (response.ok) {
       const json = await response.json();
-      recipeIngredients.value = json.ingredients;
-      aisles.value = json.aisles;
+      if (json.need_conversion) {
+        console.log(json);
+        showUnitConversionModal.value = true;
+        neededConversionUnits.value = json.need_conversion;
+      } else {
+        recipeIngredients.value = json.ingredients;
+        aisles.value = json.aisles;
+      }
+
       // console.log(json);
     }
     // console.log(response);
@@ -29,6 +36,7 @@
 <template>
   <div class="grocery-list">
     <RecipeModal v-if="showModal"></RecipeModal>
+    <UnitConversionModal v-if="showUnitConversionModal"></UnitConversionModal>
     <h1>Grocery List</h1>
     <div class="recipe-week">
       <Recipe-Card :day="mealPlan.monday.label" :recipe="mealPlan.monday.recipe"></Recipe-Card>

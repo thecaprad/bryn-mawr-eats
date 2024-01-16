@@ -3,10 +3,18 @@ import { defineStore } from 'pinia';
 
 export const useModalStore = defineStore('ModalStore', () => {
   const showModal = ref(false);
+  const showUnitConversionModal = ref(false);
+  const neededConversionUnits = ref([]);
+  const largerUnit = ref('');
+  const conversionFactor = ref(0);
   const selectedDay = ref('');
 
   return {
     showModal,
+    showUnitConversionModal,
+    neededConversionUnits,
+    largerUnit,
+    conversionFactor,
     selectedDay,
   };
 });
