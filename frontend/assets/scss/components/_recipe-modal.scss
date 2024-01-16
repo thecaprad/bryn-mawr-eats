@@ -56,5 +56,14 @@
         fill: var(--black);
       }
     }
+    .active {
+      background-color: #cecece;
+    }
+  }
+
+  label {
+    font-size: 0.8rem;
+    font-weight: 400;
+    font-family: var(--inter);
   }
 }
