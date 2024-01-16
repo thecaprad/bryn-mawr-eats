@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import GroceryAisle, IngredientUnit, GroceryItem, Recipe, RecipeIngredient
+from .models import GroceryAisle, IngredientUnit, GroceryItem, Recipe, RecipeIngredient, UnitConversion
 
 
 class GroceryAisleAdmin(admin.ModelAdmin):
@@ -50,3 +50,8 @@ class RecipeIngredientAdmin(admin.ModelAdmin):
   )
 
 admin.site.register(RecipeIngredient, RecipeIngredientAdmin)
+
+class UnitConversionAdmin(admin.ModelAdmin):
+  pass
+
+admin.site.register(UnitConversion, UnitConversionAdmin)

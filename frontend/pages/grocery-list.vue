@@ -18,7 +18,7 @@
     const response = await makeGetRequest('/grocery-list/' + selectedRecipeIDs.value + '/');
     if (response.ok) {
       const json = await response.json();
-      recipeIngredients.value = json.recipe_ingredients;
+      recipeIngredients.value = json.ingredients;
       aisles.value = json.aisles;
       // console.log(json);
     }
