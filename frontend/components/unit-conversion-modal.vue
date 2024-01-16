@@ -10,7 +10,7 @@
       const data = {
         bigger_unit: neededConversionUnits.value[selectedIndex.value],
         smaller_unit: selectedIndex.value == 0 ? neededConversionUnits.value[1] : neededConversionUnits.value[0],
-        conversion_factor: conversionFactor.value,
+        conversion_factor: 1 / conversionFactor.value,
       };
       const response = await makePostRequest('/units/', data);
       if (response.ok) {
