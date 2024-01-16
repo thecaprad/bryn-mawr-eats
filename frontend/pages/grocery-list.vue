@@ -19,7 +19,6 @@
     if (response.ok) {
       const json = await response.json();
       if (json.need_conversion) {
-        console.log(json);
         showUnitConversionModal.value = true;
         neededConversionUnits.value = json.need_conversion;
       } else {

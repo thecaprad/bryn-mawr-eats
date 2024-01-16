@@ -1,8 +1,10 @@
 from django.db.models import Q
 from django.http import JsonResponse
+from rest_framework.response import Response
 from rest_framework import generics, views, permissions, status
 
-from .models import Recipe, RecipeIngredient, UnitConversion
+from .forms import UnitConversionForm
+from .models import Recipe, RecipeIngredient, UnitConversion, IngredientUnit
 from .serializers import RecipeSerializer
 
 
@@ -49,3 +51,29 @@ class GroceryListView(views.APIView):
                         "unit": ri.unit.name if ri.unit else ''
                     }
         return JsonResponse({"recipe_ids": recipe_ids, "ingredients": ingredients, "aisles": aisles})
+
+class UnitConversionView(views.APIView):
+    permission_classes = [permissions.AllowAny]
+
+    def post(self, request):
+        bigger_unit = request.data.get('bigger_unit', None)
+        smaller_unit = request.data.get('smaller_unit', None)
+        conversion_factor = request.data.get('conversion_factor', None)
+
+        bigger_unit = IngredientUnit.objects.get(name=bigger_unit)
+        smaller_unit = IngredientUnit.objects.get(name=smaller_unit)
+
+        created = UnitConversion.objects.create(
+            bigger_unit=bigger_unit,
+            smaller_unit=smaller_unit,
+            conversion_factor=conversion_factor
+        )
+
+        if created:
+            return Response(
+                status=status.HTTP_201_CREATED
+            )
+
+        return Response(
+            status=status.HTTP_400_BAD_REQUEST
+        )
