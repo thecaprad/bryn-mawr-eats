@@ -37,8 +37,7 @@ class GroceryListView(views.APIView):
                             ingredients[ri.grocery_item.id]['unit'] = conversion.bigger_unit.name
                             ingredients[ri.grocery_item.id]['quantity'] = ri.quantity + (conversion.conversion_factor * existing_ingredient['quantity'])
                         else:
-                            pass
-                            # TODO: Handle missing conversion
+                            return JsonResponse({"need_conversion": [existing_ingredient['unit'], ri.unit.name]})
                     else:
                         ingredients[ri.grocery_item.id]['quantity'] += ri.quantity
                 else:
