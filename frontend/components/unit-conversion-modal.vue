@@ -1,7 +1,10 @@
 <script setup>
-  const { makeGetRequest, makePostRequest } = useApi();
   import { storeToRefs } from 'pinia';
   import { useModalStore } from '../../stores/ModalStore';
+
+  const emit = defineEmits(['conversionMade']);
+  const { makePostRequest } = useApi();
+
   const { showUnitConversionModal, neededConversionUnits, largerUnit, conversionFactor } = storeToRefs(useModalStore());
   const selectedIndex = ref(null);
 
@@ -15,6 +18,9 @@
       const response = await makePostRequest('/units/', data);
       if (response.ok) {
         showUnitConversionModal.value = false;
+        // Emit event to trigger recreation of grocery list after
+        // conversion unit has been added.
+        emit('conversionMade');
       }
     }
   };

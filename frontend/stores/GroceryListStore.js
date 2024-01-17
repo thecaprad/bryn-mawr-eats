@@ -80,7 +80,6 @@ export const useGroceryListStore = defineStore('GroceryListStore', () => {
   }
 
   watch(aisles, (newAisles) => {
-    console.log(newAisles);
     localStorage.setItem('useAisles', JSON.stringify(newAisles));
   });
 
@@ -91,7 +90,6 @@ export const useGroceryListStore = defineStore('GroceryListStore', () => {
   }
 
   watch(recipeIngredients, (newRecipeIngredients) => {
-    console.log(newRecipeIngredients);
     localStorage.setItem('useRecipeIngredients', JSON.stringify(newRecipeIngredients));
   });
 

@@ -42,7 +42,7 @@
 <template>
   <div class="grocery-list">
     <RecipeModal v-if="showModal"></RecipeModal>
-    <UnitConversionModal v-if="showUnitConversionModal"></UnitConversionModal>
+    <UnitConversionModal v-if="showUnitConversionModal" @conversionMade="handleCreateGroceryList"></UnitConversionModal>
     <h1>Grocery List</h1>
     <div class="recipe-week">
       <Recipe-Card :day="mealPlan.monday.label" :recipe="mealPlan.monday.recipe"></Recipe-Card>
