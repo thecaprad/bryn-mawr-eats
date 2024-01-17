@@ -117,6 +117,16 @@ export const useGroceryListStore = defineStore('GroceryListStore', () => {
     }
   };
 
+  const clearMealByDayName = (name) => {
+    for (let [key, value] of Object.entries(mealPlan.value)) {
+      if (value.label == name) {
+        mealPlan.value[key].recipe.name = '';
+        mealPlan.value[key].recipe.image_url = '';
+        mealPlan.value[key].recipe.id = null;
+      }
+    }
+  };
+
   const selectedRecipeIDs = computed(() => {
     let result = [];
     if (mealPlan.value.monday.recipe.id) {
@@ -150,5 +160,6 @@ export const useGroceryListStore = defineStore('GroceryListStore', () => {
     recipeIngredients,
     selectedRecipeIDs,
     removeIngredient,
+    clearMealByDayName,
   };
 });

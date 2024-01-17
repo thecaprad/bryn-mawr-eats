@@ -1,10 +1,24 @@
 <script setup>
   import { storeToRefs } from 'pinia';
   import { useModalStore } from '../../stores/ModalStore';
+  import { useGroceryListStore } from '../../stores/GroceryListStore';
+
+  const groceryListStore = useGroceryListStore();
+
   const { showModal, selectedDay } = storeToRefs(useModalStore());
 
   const props = defineProps(['day', 'recipe']);
   const { day, recipe } = toRefs(props);
+
+  const handleRecipeSwapOrDelete = (recipe, day) => {
+    // clear existing recipe
+    if (recipe.name) {
+      groceryListStore.clearMealByDayName(day);
+    } else {
+      showModal.value = !showModal.value;
+      selectedDay.value = day;
+    }
+  };
 </script>
 
 <template>
@@ -19,26 +33,27 @@
     <div v-else-if="recipe.name == 'Panic'" class="panic">
       <SvgPanic></SvgPanic>
     </div>
-    <img :src="recipe.image_url" v-else-if="recipe" />
+    <img :src="recipe.image_url" v-else />
     <div class="recipe-info">
       <div>
-        <h2 v-if="recipe">{{ recipe.name }}</h2>
-        <h2 v-else>Select recipe</h2>
+        <div class="name-and-icon">
+          <!-- Name -->
+          <h2 v-if="recipe.name">{{ recipe.name }}</h2>
+          <h2 v-else>Select recipe</h2>
+          <!-- Icon -->
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" @click="handleRecipeSwapOrDelete(recipe, day)">
+            <path
+              v-if="recipe.name"
+              d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"
+            />
+            <path
+              v-else
+              d="M112 48H16v96h96V48zm80 16H160v64h32H480h32V64H480 192zm0 160H160v64h32H480h32V224H480 192zm0 160H160v64h32H480h32V384H480 192zM16 208v96h96V208H16zm96 160H16v96h96V368z"
+            />
+          </svg>
+        </div>
         <h3>{{ day }}</h3>
       </div>
-      <!-- Remove recipe 'X' -->
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 384 512"
-        @click="
-          showModal = !showModal;
-          selectedDay = day;
-        "
-      >
-        <path
-          d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"
-        />
-      </svg>
     </div>
   </div>
 </template>
