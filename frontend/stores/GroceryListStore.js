@@ -97,11 +97,23 @@ export const useGroceryListStore = defineStore('GroceryListStore', () => {
     { deep: true }
   );
 
-  const removeIngredientByID = (id) => {
+  const getIngredientsByAisle = (aisleName) => {
+    return Object.values(recipeIngredients.value).filter(
+      (recipeIngredient) => recipeIngredient.grocery_aisle === aisleName
+    );
+  };
+
+  const removeIngredient = (ingredient) => {
     for (let [key] of Object.entries(recipeIngredients.value)) {
-      if (key == id) {
+      if (key == ingredient.id) {
         delete recipeIngredients.value[key];
       }
+    }
+
+    // Remove associated aisle if item was last one.
+    if (getIngredientsByAisle(ingredient.grocery_aisle).length == 0) {
+      let aisleIndex = aisles.value.findIndex((aisle) => aisle == ingredient.grocery_aisle);
+      aisles.value.splice(aisleIndex, 1);
     }
   };
 
@@ -137,6 +149,6 @@ export const useGroceryListStore = defineStore('GroceryListStore', () => {
     aisles,
     recipeIngredients,
     selectedRecipeIDs,
-    removeIngredientByID,
+    removeIngredient,
   };
 });

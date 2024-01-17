@@ -73,10 +73,11 @@
       <div class="aisle" v-for="aisle in aisles" :key="aisle">
         <h3>{{ aisle }}</h3>
         <div v-for="ingredient in getIngredientsByAisle(aisle)" :key="ingredient" class="ingredient">
+          <!-- {{ ingredient }} -->
           <span class="name">{{ ingredient.name }}</span>
           <span>{{ prettyQuantity(ingredient.quantity) }}</span>
           <span v-if="ingredient.unit != ''">{{ ingredient.unit }}</span>
-          <svg-x @click="groceryListStore.removeIngredientByID(ingredient.id)"></svg-x>
+          <svg-x @click="groceryListStore.removeIngredient(ingredient)"></svg-x>
         </div>
       </div>
     </div>
