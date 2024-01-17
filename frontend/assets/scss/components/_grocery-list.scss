@@ -38,6 +38,16 @@
     .name {
       width: 70%;
     }
+
+    svg {
+      height: 18px;
+      cursor: pointer;
+      margin-left: 15px;
+      fill: #3b322c;
+      &:hover {
+        fill: #5e8c61;
+      }
+    }
   }
 
   button {

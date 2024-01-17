@@ -3,8 +3,10 @@
   import { useGroceryListStore } from '../../stores/GroceryListStore';
   import { useModalStore } from '../../stores/ModalStore';
 
+  const groceryListStore = useGroceryListStore();
+
   const { showModal, showUnitConversionModal, neededConversionUnits } = storeToRefs(useModalStore());
-  const { mealPlan, aisles, recipeIngredients, selectedRecipeIDs } = storeToRefs(useGroceryListStore());
+  const { mealPlan, aisles, recipeIngredients, selectedRecipeIDs } = storeToRefs(groceryListStore);
 
   const { makeGetRequest } = useApi();
 
@@ -74,6 +76,7 @@
           <span class="name">{{ ingredient.name }}</span>
           <span>{{ prettyQuantity(ingredient.quantity) }}</span>
           <span v-if="ingredient.unit != ''">{{ ingredient.unit }}</span>
+          <svg-x @click="groceryListStore.removeIngredientByID(ingredient.id)"></svg-x>
         </div>
       </div>
     </div>

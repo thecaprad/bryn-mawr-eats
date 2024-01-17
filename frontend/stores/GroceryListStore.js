@@ -89,9 +89,21 @@ export const useGroceryListStore = defineStore('GroceryListStore', () => {
     recipeIngredients.value = JSON.parse(localStorage.getItem('useRecipeIngredients'));
   }
 
-  watch(recipeIngredients, (newRecipeIngredients) => {
-    localStorage.setItem('useRecipeIngredients', JSON.stringify(newRecipeIngredients));
-  });
+  watch(
+    recipeIngredients,
+    (newRecipeIngredients) => {
+      localStorage.setItem('useRecipeIngredients', JSON.stringify(newRecipeIngredients));
+    },
+    { deep: true }
+  );
+
+  const removeIngredientByID = (id) => {
+    for (let [key] of Object.entries(recipeIngredients.value)) {
+      if (key == id) {
+        delete recipeIngredients.value[key];
+      }
+    }
+  };
 
   const selectedRecipeIDs = computed(() => {
     let result = [];
@@ -125,5 +137,6 @@ export const useGroceryListStore = defineStore('GroceryListStore', () => {
     aisles,
     recipeIngredients,
     selectedRecipeIDs,
+    removeIngredientByID,
   };
 });
