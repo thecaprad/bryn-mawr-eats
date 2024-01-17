@@ -30,6 +30,13 @@
     }
     // console.log(response);
   };
+
+  const prettyQuantity = (quantity) => {
+    if (Math.round(quantity) !== quantity) {
+      return quantity.toFixed(2);
+    }
+    return quantity;
+  };
 </script>
 
 <template>
@@ -65,7 +72,7 @@
         <h3>{{ aisle }}</h3>
         <div v-for="ingredient in getIngredientsByAisle(aisle)" :key="ingredient" class="ingredient">
           <span class="name">{{ ingredient.name }}</span>
-          <span>{{ ingredient.quantity }}</span>
+          <span>{{ prettyQuantity(ingredient.quantity) }}</span>
           <span v-if="ingredient.unit != ''">{{ ingredient.unit }}</span>
         </div>
       </div>
