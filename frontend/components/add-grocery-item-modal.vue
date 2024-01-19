@@ -18,6 +18,7 @@
   const quantity = ref(0);
   const newItemName = ref('');
   const newAisleName = ref('');
+  const newUnitName = ref('');
 
   const groceryItemSelected = computed(() => {
     return Object.keys(selectedGroceryItem.value).length == 0 ? false : true;
@@ -25,6 +26,10 @@
 
   const aisleSelected = computed(() => {
     return Object.keys(selectedAisle.value).length == 0 ? false : true;
+  });
+
+  const unitSelected = computed(() => {
+    return Object.keys(selectedUnit.value).length == 0 ? false : true;
   });
 
   // Load ingredients
@@ -107,6 +112,8 @@
     if (groceryOrUnitStr == 'unit') {
       if (selection.id != 0) {
         selectedUnit.value = selection;
+      } else {
+        selectedUnit.value = {};
       }
     }
   };
@@ -172,12 +179,18 @@
         <input id="quantity" type="number" v-model="quantity" />
       </div>
 
-      <!-- Select or submit unit -->
+      <!-- Select existing unit -->
       <div class="grocery-option">
         <label for="unit">Unit</label>
         <select id="unit">
           <option v-for="unit in unitsList" :key="unit" @click="handleSelect('unit', unit)">{{ unit.name }}</option>
         </select>
+      </div>
+
+      <!-- Add new unit -->
+      <div class="grocery-option" v-if="!unitSelected">
+        <label for="new-unit">New unit</label>
+        <input id="new-unit" type="text" v-model="newUnitName" />
       </div>
 
       <button @click="handleSubmission()">Submit</button>
