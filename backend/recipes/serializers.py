@@ -1,9 +1,13 @@
 from rest_framework import serializers
 
-from .models import Recipe, RecipeIngredient, GroceryItem, IngredientUnit
+from .models import Recipe, RecipeIngredient, GroceryItem, IngredientUnit, GroceryAisle
+
+class GroceryAisleSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = GroceryAisle
+    fields = ('id', 'name')
 
 class GroceryItemSerializer(serializers.ModelSerializer):
-  # grocery_aisle_name = (read_only=True)
   class Meta:
     model = GroceryItem
     fields = ('id', 'name', 'grocery_aisle_name')

@@ -10,10 +10,22 @@
 
   const groceryItemsList = ref([{ name: 'New grocery item', id: 0 }]);
   const unitsList = ref([{ name: 'New unit', id: 0 }]);
+  const aislesList = ref([{ name: 'New aisle', id: 0 }]);
 
   const selectedGroceryItem = ref({});
   const selectedUnit = ref({});
+  const selectedAisle = ref({});
   const quantity = ref(0);
+  const newItemName = ref('');
+  const newAisleName = ref('');
+
+  const groceryItemSelected = computed(() => {
+    return Object.keys(selectedGroceryItem.value).length == 0 ? false : true;
+  });
+
+  const aisleSelected = computed(() => {
+    return Object.keys(selectedAisle.value).length == 0 ? false : true;
+  });
 
   // Load ingredients
   const { data: groceryItemsResponse } = await useLazyAsyncData(
@@ -55,10 +67,40 @@
     unitsList.value.push(...newUnits);
   });
 
+  // Load aisles
+  const { data: aisles } = await useLazyAsyncData(
+    'getAisles',
+    async () => {
+      try {
+        const response = await makeGetRequest('/aisles');
+        const json = await response.json();
+        return json;
+      } catch (e) {
+        // navigateTo('/404');
+      }
+    },
+    { initialCache: false }
+  );
+
+  // Watch for response to load.
+  watch(aisles, (newAisles) => {
+    aislesList.value.push(...newAisles);
+  });
+
   const handleSelect = (groceryOrUnitStr, selection) => {
     if (groceryOrUnitStr == 'grocery') {
       if (selection.id != 0) {
         selectedGroceryItem.value = selection;
+      } else {
+        selectedGroceryItem.value = {};
+      }
+    }
+
+    if (groceryOrUnitStr == 'aisle') {
+      if (selection.id != 0) {
+        selectedAisle.value = selection;
+      } else {
+        selectedAisle.value = {};
       }
     }
 
@@ -93,14 +135,35 @@
   <div class="grocery-modal">
     <div class="modal">
       <p>Add grocery item</p>
-
-      <!-- Select or submit ingredient -->
+      <!-- Select existing grocery item -->
       <div class="grocery-option">
         <select>
           <option v-for="item in groceryItemsList" :key="item" @click="handleSelect('grocery', item)">
             {{ item.name }}
           </option>
         </select>
+      </div>
+
+      <!-- Add new grocery item -->
+      <div class="grocery-option" v-if="!groceryItemSelected">
+        <label for="new-ingredient">New ingredient</label>
+        <input id="new-ingredient" type="text" v-model="newItemName" />
+      </div>
+
+      <!-- Existing aisle for new grocery item -->
+      <div class="grocery-option" v-if="!groceryItemSelected">
+        <label>Grocery aisle</label>
+        <select id="aisles">
+          <option v-for="aisle in aislesList" :key="aisle" @click="handleSelect('aisle', aisle)">
+            {{ aisle.name }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Add new aisle -->
+      <div class="grocery-option" v-if="!groceryItemSelected && !aisleSelected">
+        <label for="new-aisle">New aisle</label>
+        <input id="new-aisle" type="text" v-model="newAisleName" />
       </div>
 
       <!-- Quantity -->
@@ -111,7 +174,8 @@
 
       <!-- Select or submit unit -->
       <div class="grocery-option">
-        <select>
+        <label for="unit">Unit</label>
+        <select id="unit">
           <option v-for="unit in unitsList" :key="unit" @click="handleSelect('unit', unit)">{{ unit.name }}</option>
         </select>
       </div>

@@ -3,8 +3,8 @@ from django.http import JsonResponse
 from rest_framework.response import Response
 from rest_framework import generics, views, permissions, status
 
-from .models import Recipe, RecipeIngredient, UnitConversion, IngredientUnit, GroceryItem
-from .serializers import RecipeSerializer, GroceryItemSerializer, IngredientUnitSerializer
+from .models import Recipe, RecipeIngredient, UnitConversion, IngredientUnit, GroceryItem, GroceryAisle
+from .serializers import RecipeSerializer, GroceryItemSerializer, IngredientUnitSerializer, GroceryAisleSerializer
 
 
 class RecipeAPIView(generics.ListAPIView):
@@ -18,6 +18,10 @@ class GroceryItemAPIView(generics.ListAPIView):
 class IngredientUnitAPIView(generics.ListAPIView):
   queryset = IngredientUnit.objects.all().order_by('name')
   serializer_class = IngredientUnitSerializer
+
+class AisleAPIView(generics.ListAPIView):
+  queryset = GroceryAisle.objects.all().order_by('name')
+  serializer_class = GroceryAisleSerializer
 
 class GroceryListView(views.APIView):
     permission_classes = [permissions.AllowAny]
