@@ -7,7 +7,7 @@
 
   const { showModal, showUnitConversionModal, neededConversionUnits, showAddGroceryItemModal, defaultAisle } =
     storeToRefs(useModalStore());
-  const { mealPlan, aisles, recipeIngredients, selectedRecipeIDs, groceryItems, allItems } =
+  const { mealPlan, aisles, recipeIngredients, selectedRecipeIDs, getAllItemsNestedByAisle } =
     storeToRefs(groceryListStore);
 
   const { makeGetRequest } = useApi();
@@ -69,20 +69,18 @@
     <!-- Grocery Aisles -->
     <h2>Aisles</h2>
     <div class="aisles">
-      <!-- {{ recipeIngredients }} -->
-      <div class="aisle" v-for="aisle in aisles" :key="aisle">
-        <h3>{{ aisle }}</h3>
-        <div v-for="ingredient in getIngredientsByAisle(aisle)" :key="ingredient" class="ingredient">
-          <!-- {{ ingredient }} -->
-          <span class="name">{{ ingredient.name }}</span>
-          <span>{{ prettyQuantity(ingredient.quantity) }}</span>
-          <span v-if="ingredient.unit != ''">{{ ingredient.unit }}</span>
-          <svg-x @click="groceryListStore.removeIngredient(ingredient)"></svg-x>
+      <div class="aisle" v-for="aisleItem in getAllItemsNestedByAisle" :key="aisleItem">
+        <h3>{{ Object.keys(aisleItem)[0] }}</h3>
+        <div v-for="item in Object.values(aisleItem)[0]" :key="item" class="ingredient">
+          <span class="name">{{ item.name }}</span>
+          <span>{{ prettyQuantity(item.quantity) }}</span>
+          <span v-if="item.unit != ''">{{ item.unit }}</span>
+          <svg-x @click="groceryListStore.removeIngredient(item)"></svg-x>
         </div>
         <button
           @click="
             showAddGroceryItemModal = true;
-            defaultAisle = aisle;
+            defaultAisle = Object.keys(aisleItem)[0];
           "
         >
           + Add grocery item

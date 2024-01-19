@@ -83,7 +83,7 @@ export const useGroceryListStore = defineStore('GroceryListStore', () => {
     localStorage.setItem('useAisles', JSON.stringify(newAisles));
   });
 
-  const recipeIngredients = ref([]);
+  const recipeIngredients = ref({});
   // Persist and retrieve recipe ingredients
   if (localStorage.getItem('useRecipeIngredients')) {
     recipeIngredients.value = JSON.parse(localStorage.getItem('useRecipeIngredients'));
@@ -97,7 +97,7 @@ export const useGroceryListStore = defineStore('GroceryListStore', () => {
     { deep: true }
   );
 
-  const groceryItems = ref([]);
+  const groceryItems = ref({});
   // Persist and retrieve grocery items.
   if (localStorage.getItem('useGroceryItems')) {
     groceryItems.value = JSON.parse(localStorage.getItem('useGroceryItems'));
@@ -113,37 +113,55 @@ export const useGroceryListStore = defineStore('GroceryListStore', () => {
 
   // Aggregate recipeIngredients and groceryItems
   const allItems = computed(() => {
-    let result = recipeIngredients.value;
-    groceryItems.value.forEach((item) => {
-      for (let [key, value] of Object.entries(item)) {
-        result[key] = value;
+    return { ...recipeIngredients.value, ...groceryItems.value };
+  });
+
+  const getAllItemsNestedByAisle = computed(() => {
+    let result = [];
+    for (let [key, value] of Object.entries(allItems.value)) {
+      let aisleExists = false;
+      let existingIndex = null;
+      result.forEach((aisleItemObj, i) => {
+        if (Object.keys(aisleItemObj)[0] == value.grocery_aisle) {
+          aisleExists = true;
+          existingIndex = i;
+        }
+      });
+
+      let obj = {
+        id: value.id,
+        grocery_aisle: value.grocery_aisle,
+        name: value.name,
+        quantity: value.quantity,
+        unit: value.unit,
+      };
+
+      if (!aisleExists) {
+        let item = {};
+        item[value.grocery_aisle] = [obj];
+        result.push(item);
+      } else {
+        result[existingIndex][value.grocery_aisle].push(obj);
       }
-    });
+    }
     return result;
   });
 
-  const getIngredientsByAisle = (aisleName) => {
-    return Object.values(allItems.value).filter((item) => item.grocery_aisle === aisleName);
-  };
-
   const removeIngredient = (ingredient) => {
+    console.log('please remove ingredient', ingredient);
     // Try to delete from recipeIngredients
     for (let [key] of Object.entries(recipeIngredients.value)) {
       if (key == ingredient.id) {
+        console.log('found it in RI');
         delete recipeIngredients.value[key];
       }
     }
     // Try to delete from groceryItems
-    for (let [key] of Object.entries(allItems.value)) {
+    for (let [key] of Object.entries(groceryItems.value)) {
       if (key == ingredient.id) {
-        delete allItems.value[key];
+        console.log('found it in GI');
+        delete groceryItems.value[key];
       }
-    }
-
-    // Remove associated aisle if item was last one.
-    if (getIngredientsByAisle(ingredient.grocery_aisle).length == 0) {
-      let aisleIndex = aisles.value.findIndex((aisle) => aisle == ingredient.grocery_aisle);
-      aisles.value.splice(aisleIndex, 1);
     }
   };
 
@@ -193,5 +211,6 @@ export const useGroceryListStore = defineStore('GroceryListStore', () => {
     selectedRecipeIDs,
     removeIngredient,
     clearMealByDayName,
+    getAllItemsNestedByAisle,
   };
 });
