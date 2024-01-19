@@ -8,6 +8,8 @@ export const useModalStore = defineStore('ModalStore', () => {
   const largerUnit = ref('');
   const conversionFactor = ref(0);
   const selectedDay = ref('');
+  const showAddGroceryItemModal = ref(false);
+  const defaultAisle = ref('');
 
   return {
     showModal,
@@ -16,5 +18,7 @@ export const useModalStore = defineStore('ModalStore', () => {
     largerUnit,
     conversionFactor,
     selectedDay,
+    showAddGroceryItemModal,
+    defaultAisle,
   };
 });

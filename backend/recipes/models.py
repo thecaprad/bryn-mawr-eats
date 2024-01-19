@@ -16,6 +16,10 @@ class GroceryItem(models.Model):
   name = models.CharField(max_length=100, blank=False, null=False)
   grocery_aisle = models.ForeignKey(GroceryAisle, blank=True, null=True, on_delete=models.SET_NULL)
 
+  @property
+  def grocery_aisle_name(self):
+     return self.grocery_aisle.name
+
   def __str__(self):
     return self.name
 

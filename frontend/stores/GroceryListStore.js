@@ -97,16 +97,46 @@ export const useGroceryListStore = defineStore('GroceryListStore', () => {
     { deep: true }
   );
 
+  const groceryItems = ref([]);
+  // Persist and retrieve grocery items.
+  if (localStorage.getItem('useGroceryItems')) {
+    groceryItems.value = JSON.parse(localStorage.getItem('useGroceryItems'));
+  }
+
+  watch(
+    groceryItems,
+    (newGroceryItems) => {
+      localStorage.setItem('useGroceryItems', JSON.stringify(newGroceryItems));
+    },
+    { deep: true }
+  );
+
+  // Aggregate recipeIngredients and groceryItems
+  const allItems = computed(() => {
+    let result = recipeIngredients.value;
+    groceryItems.value.forEach((item) => {
+      for (let [key, value] of Object.entries(item)) {
+        result[key] = value;
+      }
+    });
+    return result;
+  });
+
   const getIngredientsByAisle = (aisleName) => {
-    return Object.values(recipeIngredients.value).filter(
-      (recipeIngredient) => recipeIngredient.grocery_aisle === aisleName
-    );
+    return Object.values(allItems.value).filter((item) => item.grocery_aisle === aisleName);
   };
 
   const removeIngredient = (ingredient) => {
+    // Try to delete from recipeIngredients
     for (let [key] of Object.entries(recipeIngredients.value)) {
       if (key == ingredient.id) {
         delete recipeIngredients.value[key];
+      }
+    }
+    // Try to delete from groceryItems
+    for (let [key] of Object.entries(allItems.value)) {
+      if (key == ingredient.id) {
+        delete allItems.value[key];
       }
     }
 
@@ -158,6 +188,8 @@ export const useGroceryListStore = defineStore('GroceryListStore', () => {
     mealPlan,
     aisles,
     recipeIngredients,
+    groceryItems,
+    allItems,
     selectedRecipeIDs,
     removeIngredient,
     clearMealByDayName,

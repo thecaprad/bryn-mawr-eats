@@ -1,0 +1,74 @@
+.grocery-modal {
+  display: flex;
+  align-items: center;
+  background: rgba(rgb(0, 0, 0), 0.02);
+  flex-flow: column nowrap;
+  height: 100vh;
+  left: 0;
+  overflow: auto;
+  position: fixed;
+  text-align: left;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  -webkit-overflow-scrolling: touch;
+
+  .modal {
+    display: block;
+    background: #eaeaea;
+    margin: auto;
+    max-width: 1200px;
+    max-height: 500px;
+    overflow: scroll;
+    position: relative;
+    width: 50%;
+    padding: 50px 20px;
+    text-align: center;
+    border-radius: 10px;
+    border: solid 0.15rem black;
+    box-shadow: 0 1px 4px #353839;
+
+    @media (min-width: 550px) {
+      min-width: 500px;
+    }
+    @media (min-width: 768px) {
+      padding: 40px;
+    }
+
+    .grocery-option {
+      background-color: var(--white);
+      color: var(--black);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      margin: 0.5rem;
+      padding: 1rem;
+      font-size: 1.5rem;
+      font-weight: 500;
+      text-align: left;
+      justify-content: space-between;
+      cursor: pointer;
+      border: solid var(--black) 1px;
+
+      .info {
+        height: 2rem;
+        transform: rotate(180);
+        fill: var(--black);
+      }
+
+      select,
+      input {
+        width: 100%;
+      }
+    }
+    .active {
+      background-color: #cecece;
+    }
+  }
+
+  label {
+    font-size: 0.8rem;
+    font-weight: 400;
+    font-family: var(--inter);
+  }
+}

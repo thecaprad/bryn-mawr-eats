@@ -5,8 +5,10 @@
 
   const groceryListStore = useGroceryListStore();
 
-  const { showModal, showUnitConversionModal, neededConversionUnits } = storeToRefs(useModalStore());
-  const { mealPlan, aisles, recipeIngredients, selectedRecipeIDs } = storeToRefs(groceryListStore);
+  const { showModal, showUnitConversionModal, neededConversionUnits, showAddGroceryItemModal, defaultAisle } =
+    storeToRefs(useModalStore());
+  const { mealPlan, aisles, recipeIngredients, selectedRecipeIDs, groceryItems, allItems } =
+    storeToRefs(groceryListStore);
 
   const { makeGetRequest } = useApi();
 
@@ -27,10 +29,7 @@
         recipeIngredients.value = json.ingredients;
         aisles.value = json.aisles;
       }
-
-      // console.log(json);
     }
-    // console.log(response);
   };
 
   const prettyQuantity = (quantity) => {
@@ -44,6 +43,7 @@
 <template>
   <div class="grocery-list">
     <RecipeModal v-if="showModal"></RecipeModal>
+    <AddGroceryItemModal v-if="showAddGroceryItemModal"></AddGroceryItemModal>
     <UnitConversionModal v-if="showUnitConversionModal" @conversionMade="handleCreateGroceryList"></UnitConversionModal>
     <h1>Grocery List</h1>
     <div class="recipe-week">
@@ -79,6 +79,14 @@
           <span v-if="ingredient.unit != ''">{{ ingredient.unit }}</span>
           <svg-x @click="groceryListStore.removeIngredient(ingredient)"></svg-x>
         </div>
+        <button
+          @click="
+            showAddGroceryItemModal = true;
+            defaultAisle = aisle;
+          "
+        >
+          + Add grocery item
+        </button>
       </div>
     </div>
   </div>
