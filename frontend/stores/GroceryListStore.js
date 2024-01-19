@@ -148,18 +148,15 @@ export const useGroceryListStore = defineStore('GroceryListStore', () => {
   });
 
   const removeIngredient = (ingredient) => {
-    console.log('please remove ingredient', ingredient);
     // Try to delete from recipeIngredients
     for (let [key] of Object.entries(recipeIngredients.value)) {
       if (key == ingredient.id) {
-        console.log('found it in RI');
         delete recipeIngredients.value[key];
       }
     }
     // Try to delete from groceryItems
     for (let [key] of Object.entries(groceryItems.value)) {
       if (key == ingredient.id) {
-        console.log('found it in GI');
         delete groceryItems.value[key];
       }
     }
