@@ -1,3 +1,20 @@
+<script setup>
+  import { storeToRefs } from 'pinia';
+  import { useModalStore } from '/stores/ModalStore';
+  const { showModal, showAddGroceryItemModal } = storeToRefs(useModalStore());
+
+  // Close modals globally on ESC keydown.
+  onMounted(() => {
+    const body = document.querySelector('body');
+    body.addEventListener('keydown', (e) => {
+      if (e.key == 'Escape') {
+        showModal.value = false;
+        showAddGroceryItemModal.value = false;
+      }
+    });
+  });
+</script>
+
 <template>
   <div>
     <Header></Header>
