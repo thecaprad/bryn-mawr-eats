@@ -68,9 +68,9 @@
 </script>
 
 <template>
-  <div class="recipe-modal" @click="showModal = false">
+  <div class="modal-base" @click="showModal = false">
     <div class="modal">
-      <div class="recipe-option" v-for="recipe in recipeList" :key="recipe" @click="makeSelection(recipe)">
+      <div class="modal-option" v-for="recipe in recipeList" :key="recipe" @click="makeSelection(recipe)">
         <div>{{ recipe.name }}</div>
         <SvgPanic class="info"></SvgPanic>
       </div>

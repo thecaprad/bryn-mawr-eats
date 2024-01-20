@@ -172,11 +172,11 @@
 </script>
 
 <template>
-  <div class="grocery-modal" @click="showAddGroceryItemModal = false">
+  <div class="modal-base" @click="showAddGroceryItemModal = false">
     <div class="modal">
       <p>Add grocery item</p>
       <!-- Select existing grocery item -->
-      <div class="grocery-option">
+      <div class="modal-option">
         <select v-model="selectedGroceryItem">
           <option
             v-for="item in groceryItemsList"
