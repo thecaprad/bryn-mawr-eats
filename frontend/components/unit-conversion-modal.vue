@@ -27,11 +27,11 @@
 </script>
 
 <template>
-  <div class="recipe-modal">
+  <div class="modal-base">
     <div class="modal">
       <p>Select which unit is larger</p>
       <div
-        class="recipe-option"
+        class="modal-option"
         v-for="(unit, i) in neededConversionUnits"
         :key="unit"
         @click="
@@ -43,8 +43,10 @@
         <div>{{ unit }}</div>
       </div>
       <label>How many smaller units fit into the larger one?</label>
-      <input type="text" v-model="conversionFactor" />
-      <button @click="handleSubmission">Submit</button>
+      <div class="modal-option">
+        <input type="text" v-model="conversionFactor" />
+      </div>
+      <button @click="handleSubmission" class="submit">Submit</button>
     </div>
   </div>
 </template>

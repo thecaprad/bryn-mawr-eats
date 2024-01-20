@@ -244,7 +244,7 @@
         <input id="new-unit" type="text" v-model="newUnitName" />
       </div>
 
-      <button @click="handleSubmission()">Submit</button>
+      <button @click="handleSubmission()" class="submit">Submit</button>
     </div>
   </div>
 </template>

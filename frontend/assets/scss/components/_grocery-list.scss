@@ -21,8 +21,27 @@
   }
 
   button {
-    padding: 10px;
+    display: flex;
+    justify-content: space-between;
     cursor: pointer;
+    padding: 0.7rem;
+    width: 200px;
+    background-color: var(--light-green);
+    border-radius: 5px;
+    box-shadow: none;
+    border: none;
+    color: var(--white);
+    margin-top: 15px;
+    font-size: 0.9rem;
+    transition: background-color 0.2s linear;
+
+    &:hover {
+      background-color: #8fd2bb;
+    }
+
+    svg {
+      fill: var(--white);
+    }
   }
 
   .aisles {

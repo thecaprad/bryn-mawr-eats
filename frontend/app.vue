@@ -1,7 +1,7 @@
 <script setup>
   import { storeToRefs } from 'pinia';
   import { useModalStore } from '/stores/ModalStore';
-  const { showModal, showAddGroceryItemModal } = storeToRefs(useModalStore());
+  const { showModal, showAddGroceryItemModal, showUnitConversionModal } = storeToRefs(useModalStore());
 
   // Close modals globally on ESC keydown.
   onMounted(() => {
@@ -10,6 +10,7 @@
       if (e.key == 'Escape') {
         showModal.value = false;
         showAddGroceryItemModal.value = false;
+        showUnitConversionModal.value = false;
       }
     });
   });
