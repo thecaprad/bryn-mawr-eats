@@ -191,7 +191,7 @@
       </div>
 
       <!-- Add new grocery item -->
-      <label for="new-ingredient" class="modal-label" v-if="!groceryItemSelected">New ingredient</label>
+      <label for="new-ingredient" class="modal-label" v-if="!groceryItemSelected">New item name</label>
       <div class="modal-option" v-if="!groceryItemSelected">
         <input id="new-ingredient" type="text" v-model="newItemName" />
       </div>
