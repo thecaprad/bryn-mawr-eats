@@ -13,7 +13,7 @@ class IngredientUnit(models.Model):
     return self.name
 
 class GroceryItem(models.Model):
-  name = models.CharField(max_length=100, blank=False, null=False)
+  name = models.CharField(max_length=100, blank=False, null=False, unique=True)
   grocery_aisle = models.ForeignKey(GroceryAisle, blank=True, null=True, on_delete=models.SET_NULL)
 
   @property
@@ -27,7 +27,7 @@ class GroceryItem(models.Model):
     ordering = ['name']
 
 class Recipe(models.Model):
-  name = models.CharField(max_length=250, blank=False, null=False)
+  name = models.CharField(max_length=250, blank=False, null=False, unique=True)
   prep_time = models.IntegerField(blank=True, null=True)
   cook_time = models.IntegerField(blank=True, null=True)
   source_url = models.URLField(blank=True, null=True)

@@ -12,8 +12,23 @@ class RecipeAPIView(generics.ListAPIView):
   serializer_class = RecipeSerializer
 
 class GroceryItemAPIView(generics.ListAPIView):
-  queryset = GroceryItem.objects.all().order_by('name')
-  serializer_class = GroceryItemSerializer
+    queryset = GroceryItem.objects.all().order_by('name')
+    serializer_class = GroceryItemSerializer
+
+    def post(self, request):
+        new_item_name = request.data.get('new_item_name', None)
+        grocery_aisle_id = request.data.get('grocery_aisle_id', None)
+        if new_item_name and grocery_aisle_id:
+            try:
+                aisle = GroceryItem.objects.create(name=new_item_name, grocery_aisle_id=grocery_aisle_id)
+                serialized_item = GroceryItemSerializer(aisle)
+                return JsonResponse(serialized_item.data)
+            except Exception:
+                return Response(
+                    {"error": "Cannot add item"},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+
 
 class IngredientUnitAPIView(generics.ListAPIView):
     queryset = IngredientUnit.objects.all().order_by('name')
@@ -23,6 +38,7 @@ class IngredientUnitAPIView(generics.ListAPIView):
         new_unit_name = request.data.get('new_unit_name', None)
         if new_unit_name:
             try:
+                new_unit_name = new_unit_name.lower()
                 unit = IngredientUnit.objects.create(name=new_unit_name)
                 serialized_unit = IngredientUnitSerializer(unit)
                 return JsonResponse(serialized_unit.data)
@@ -34,8 +50,22 @@ class IngredientUnitAPIView(generics.ListAPIView):
 
 
 class AisleAPIView(generics.ListAPIView):
-  queryset = GroceryAisle.objects.all().order_by('name')
-  serializer_class = GroceryAisleSerializer
+    queryset = GroceryAisle.objects.all().order_by('name')
+    serializer_class = GroceryAisleSerializer
+
+    def post(self, request):
+        new_aisle_name = request.data.get('new_aisle_name', None)
+        if new_aisle_name:
+            try:
+                new_aisle_name = new_aisle_name.title()
+                aisle = GroceryAisle.objects.create(name=new_aisle_name)
+                serialized_aisle = GroceryAisleSerializer(aisle)
+                return JsonResponse(serialized_aisle.data)
+            except Exception:
+                return Response(
+                    {"error": "Aisle already exists"},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
 
 class GroceryListView(views.APIView):
     permission_classes = [permissions.AllowAny]

@@ -119,31 +119,61 @@
   };
 
   const handleSubmission = async () => {
-    let item = {
-      id: selectedGroceryItem.value.id,
-      grocery_aisle: selectedGroceryItem.value.grocery_aisle_name,
-      name: selectedGroceryItem.value.name,
-      quantity: quantity.value,
-    };
-
-    // Existing grocery item and existing unit selected.
-    if (selectedGroceryItem.value && selectedUnit.value && quantity.value != 0) {
-      item['unit'] = selectedUnit.value.name;
-    }
-
-    // Existing grocery item and NEW unit selected.
-    if (selectedGroceryItem.value && !unitSelected.value && newUnitName.value != '' && quantity.value != 0) {
-      let data = { new_unit_name: newUnitName.value };
-      let response = await makePostRequest('/ingredient-units/', data);
-      if (response.ok) {
-        let json = await response.json();
-        item['unit'] = json.name;
+    if (quantity.value) {
+      // Add new unit.
+      if (!unitSelected.value && newUnitName.value) {
+        let data = { new_unit_name: newUnitName.value };
+        let response = await makePostRequest('/ingredient-units/', data);
+        if (response.ok) {
+          let json = await response.json();
+          let newUnit = { name: json.name, id: json.id };
+          unitsList.value.push(newUnit);
+          handleSelect('unit', newUnit);
+        }
       }
-    }
 
-    groceryItems.value[selectedGroceryItem.value.id.toString()] = item;
-    showAddGroceryItemModal.value = false;
-    defaultAisle.value = '';
+      // Add new aisle.
+      if (!aisleSelected.value && newAisleName.value) {
+        let data = { new_aisle_name: newAisleName.value };
+        let response = await makePostRequest('/aisles/', data);
+        if (response.ok) {
+          let json = await response.json();
+          let newAisle = { name: json.name, id: json.id };
+          aislesList.value.push(newAisle);
+          handleSelect('aisle', newAisle);
+        }
+      }
+
+      // Add new item.
+      if (!groceryItemSelected.value && newItemName.value && aisleSelected.value) {
+        let data = { new_item_name: newItemName.value, grocery_aisle_id: selectedAisle.value.id };
+        let response = await makePostRequest('/grocery-items/', data);
+        if (response.ok) {
+          let json = await response.json();
+          let newItem = {
+            name: json.name,
+            id: json.id,
+            grocery_aisle_name: json.grocery_aisle_name,
+            quantity: quantity.value,
+            unit: selectedUnit.value.name,
+          };
+          groceryItemsList.value.push(newItem);
+          handleSelect('grocery', newItem);
+        }
+      }
+
+      let item = {
+        id: selectedGroceryItem.value.id,
+        grocery_aisle: selectedGroceryItem.value.grocery_aisle_name,
+        name: selectedGroceryItem.value.name,
+        quantity: quantity.value,
+        unit: selectedUnit.value.name,
+      };
+
+      groceryItems.value[selectedGroceryItem.value.id.toString()] = item;
+      showAddGroceryItemModal.value = false;
+      defaultAisle.value = '';
+    }
   };
 </script>
 
@@ -154,7 +184,12 @@
       <!-- Select existing grocery item -->
       <div class="grocery-option">
         <select>
-          <option v-for="item in groceryItemsList" :key="item" @click="handleSelect('grocery', item)">
+          <option
+            v-for="item in groceryItemsList"
+            :key="item"
+            @click="handleSelect('grocery', item)"
+            :selected="item.name == selectedGroceryItem.name ? true : false"
+          >
             {{ item.name }}
           </option>
         </select>
@@ -170,7 +205,12 @@
       <div class="grocery-option" v-if="!groceryItemSelected">
         <label>Grocery aisle</label>
         <select id="aisles">
-          <option v-for="aisle in aislesList" :key="aisle" @click="handleSelect('aisle', aisle)">
+          <option
+            v-for="aisle in aislesList"
+            :key="aisle"
+            @click="handleSelect('aisle', aisle)"
+            :selected="aisle.name == selectedAisle.name ? true : false"
+          >
             {{ aisle.name }}
           </option>
         </select>
@@ -196,7 +236,7 @@
             v-for="unit in unitsList"
             :key="unit"
             @click="handleSelect('unit', unit)"
-            :selected="unit.name == 'whole' ? true : false"
+            :selected="unit.name == selectedUnit.name ? true : false"
           >
             {{ unit.name }}
           </option>
