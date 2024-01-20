@@ -12,24 +12,24 @@
   const unitsList = ref([{ name: 'New unit', id: 0 }]);
   const aislesList = ref([{ name: 'New aisle', id: 0 }]);
 
-  const selectedGroceryItem = ref({});
-  const selectedUnit = ref({});
-  const selectedAisle = ref({});
+  const selectedGroceryItem = ref({ name: 'New grocery item', id: 0 });
+  const selectedUnit = ref({ name: 'New unit', id: 0 });
+  const selectedAisle = ref({ name: 'New aisle', id: 0 });
   const quantity = ref(0);
   const newItemName = ref('');
   const newAisleName = ref('');
   const newUnitName = ref('');
 
   const groceryItemSelected = computed(() => {
-    return Object.keys(selectedGroceryItem.value).length == 0 ? false : true;
+    return selectedGroceryItem.value.id != 0 ? true : false;
   });
 
   const aisleSelected = computed(() => {
-    return Object.keys(selectedAisle.value).length == 0 ? false : true;
+    return selectedAisle.value.id != 0 ? true : false;
   });
 
   const unitSelected = computed(() => {
-    return Object.keys(selectedUnit.value).length == 0 ? false : true;
+    return selectedUnit.value.id != 0 ? true : false;
   });
 
   // Load ingredients
@@ -96,24 +96,18 @@
     if (groceryOrUnitStr == 'grocery') {
       if (selection.id != 0) {
         selectedGroceryItem.value = selection;
-      } else {
-        selectedGroceryItem.value = {};
       }
     }
 
     if (groceryOrUnitStr == 'aisle') {
       if (selection.id != 0) {
         selectedAisle.value = selection;
-      } else {
-        selectedAisle.value = {};
       }
     }
 
     if (groceryOrUnitStr == 'unit') {
       if (selection.id != 0) {
         selectedUnit.value = selection;
-      } else {
-        selectedUnit.value = {};
       }
     }
   };
@@ -183,12 +177,12 @@
       <p>Add grocery item</p>
       <!-- Select existing grocery item -->
       <div class="grocery-option">
-        <select>
+        <select v-model="selectedGroceryItem">
           <option
             v-for="item in groceryItemsList"
             :key="item"
-            @click="handleSelect('grocery', item)"
             :selected="item.name == selectedGroceryItem.name ? true : false"
+            :value="item"
           >
             {{ item.name }}
           </option>
@@ -204,12 +198,12 @@
       <!-- Existing aisle for new grocery item -->
       <div class="grocery-option" v-if="!groceryItemSelected">
         <label>Grocery aisle</label>
-        <select id="aisles">
+        <select id="aisles" v-model="selectedAisle">
           <option
             v-for="aisle in aislesList"
             :key="aisle"
-            @click="handleSelect('aisle', aisle)"
             :selected="aisle.name == selectedAisle.name ? true : false"
+            :value="aisle"
           >
             {{ aisle.name }}
           </option>
@@ -231,12 +225,12 @@
       <!-- Select existing unit -->
       <div class="grocery-option">
         <label for="unit">Unit</label>
-        <select id="unit">
+        <select id="unit" v-model="selectedUnit">
           <option
             v-for="unit in unitsList"
             :key="unit"
-            @click="handleSelect('unit', unit)"
             :selected="unit.name == selectedUnit.name ? true : false"
+            :value="unit"
           >
             {{ unit.name }}
           </option>
