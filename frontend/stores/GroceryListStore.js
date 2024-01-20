@@ -162,6 +162,11 @@ export const useGroceryListStore = defineStore('GroceryListStore', () => {
     }
   };
 
+  const clearGroceryList = () => {
+    recipeIngredients.value = {};
+    groceryItems.value = {};
+  };
+
   const clearMealByDayName = (name) => {
     for (let [key, value] of Object.entries(mealPlan.value)) {
       if (value.label == name) {
@@ -207,6 +212,7 @@ export const useGroceryListStore = defineStore('GroceryListStore', () => {
     allItems,
     selectedRecipeIDs,
     removeIngredient,
+    clearGroceryList,
     clearMealByDayName,
     getAllItemsNestedByAisle,
   };

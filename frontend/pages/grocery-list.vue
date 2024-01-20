@@ -56,7 +56,7 @@
         <SvgWand></SvgWand>
       </button>
 
-      <button>
+      <button @click="groceryListStore.clearGroceryList()">
         Clear grocery list
         <SvgTrash></SvgTrash>
       </button>
