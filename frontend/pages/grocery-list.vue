@@ -63,7 +63,7 @@
     </div>
 
     <!-- Grocery Aisles -->
-    <h2>Aisles</h2>
+    <!-- <hr /> -->
     <div class="aisles">
       <div class="aisle" v-for="aisleItem in getAllItemsNestedByAisle" :key="aisleItem">
         <h3>{{ Object.keys(aisleItem)[0] }}</h3>
