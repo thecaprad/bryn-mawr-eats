@@ -16,8 +16,22 @@ class GroceryItemAPIView(generics.ListAPIView):
   serializer_class = GroceryItemSerializer
 
 class IngredientUnitAPIView(generics.ListAPIView):
-  queryset = IngredientUnit.objects.all().order_by('name')
-  serializer_class = IngredientUnitSerializer
+    queryset = IngredientUnit.objects.all().order_by('name')
+    serializer_class = IngredientUnitSerializer
+
+    def post(self, request):
+        new_unit_name = request.data.get('new_unit_name', None)
+        if new_unit_name:
+            try:
+                unit = IngredientUnit.objects.create(name=new_unit_name)
+                serialized_unit = IngredientUnitSerializer(unit)
+                return JsonResponse(serialized_unit.data)
+            except Exception:
+                return Response(
+                    {"error": "Unit already exists"},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+
 
 class AisleAPIView(generics.ListAPIView):
   queryset = GroceryAisle.objects.all().order_by('name')

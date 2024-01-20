@@ -119,22 +119,31 @@
   };
 
   const handleSubmission = async () => {
+    let item = {
+      id: selectedGroceryItem.value.id,
+      grocery_aisle: selectedGroceryItem.value.grocery_aisle_name,
+      name: selectedGroceryItem.value.name,
+      quantity: quantity.value,
+    };
+
+    // Existing grocery item and existing unit selected.
     if (selectedGroceryItem.value && selectedUnit.value && quantity.value != 0) {
-      let item = {
-        id: selectedGroceryItem.value.id,
-        grocery_aisle: selectedGroceryItem.value.grocery_aisle_name,
-        name: selectedGroceryItem.value.name,
-        quantity: quantity.value,
-        unit: selectedUnit.value.name,
-      };
-
-      let result = {};
-      result[selectedGroceryItem.value.id.toString()] = item;
-
-      groceryItems.value.push(result);
-      showAddGroceryItemModal.value = false;
-      defaultAisle.value = '';
+      item['unit'] = selectedUnit.value.name;
     }
+
+    // Existing grocery item and NEW unit selected.
+    if (selectedGroceryItem.value && !unitSelected.value && newUnitName.value != '' && quantity.value != 0) {
+      let data = { new_unit_name: newUnitName.value };
+      let response = await makePostRequest('/ingredient-units/', data);
+      if (response.ok) {
+        let json = await response.json();
+        item['unit'] = json.name;
+      }
+    }
+
+    groceryItems.value[selectedGroceryItem.value.id.toString()] = item;
+    showAddGroceryItemModal.value = false;
+    defaultAisle.value = '';
   };
 </script>
 
@@ -183,7 +192,14 @@
       <div class="grocery-option">
         <label for="unit">Unit</label>
         <select id="unit">
-          <option v-for="unit in unitsList" :key="unit" @click="handleSelect('unit', unit)">{{ unit.name }}</option>
+          <option
+            v-for="unit in unitsList"
+            :key="unit"
+            @click="handleSelect('unit', unit)"
+            :selected="unit.name == 'whole' ? true : false"
+          >
+            {{ unit.name }}
+          </option>
         </select>
       </div>
 
