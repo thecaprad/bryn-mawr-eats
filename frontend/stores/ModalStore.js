@@ -11,6 +11,22 @@ export const useModalStore = defineStore('ModalStore', () => {
   const showAddGroceryItemModal = ref(false);
   const defaultAisle = ref('');
 
+  watch(showModal, (newValue) => {
+    if (newValue) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+  });
+
+  watch(showAddGroceryItemModal, (newValue) => {
+    if (newValue) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+  });
+
   return {
     showModal,
     showUnitConversionModal,
