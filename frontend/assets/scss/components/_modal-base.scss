@@ -66,6 +66,15 @@
     .active {
       background-color: #cecece;
     }
+
+    .recipe-option {
+      img {
+        height: 50px;
+        width: 50px;
+        object-fit: cover;
+        border-radius: 5px;
+      }
+    }
   }
 
   label {
