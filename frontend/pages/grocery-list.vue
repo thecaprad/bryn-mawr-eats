@@ -12,12 +12,6 @@
 
   const { makeGetRequest } = useApi();
 
-  const getIngredientsByAisle = (aisleName) => {
-    return Object.values(recipeIngredients.value).filter(
-      (recipeIngredient) => recipeIngredient.grocery_aisle === aisleName
-    );
-  };
-
   const handleCreateGroceryList = async () => {
     const response = await makeGetRequest('/grocery-list/' + selectedRecipeIDs.value + '/');
     if (response.ok) {
