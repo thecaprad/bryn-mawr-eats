@@ -48,7 +48,7 @@ class RecipeIngredient(models.Model):
     def save(self, *args, **kwargs):
         if not self.id and not self.unit:
             whole = IngredientUnit.objects.get_or_create(name='whole')
-            self.unit = whole
+            self.unit = whole[0]
         return super(RecipeIngredient, self).save(*args, **kwargs)
 
 class UnitConversion(models.Model):
