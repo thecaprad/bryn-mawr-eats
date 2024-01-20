@@ -172,7 +172,7 @@
 </script>
 
 <template>
-  <div class="grocery-modal">
+  <div class="grocery-modal" @click="showAddGroceryItemModal = false">
     <div class="modal">
       <p>Add grocery item</p>
       <!-- Select existing grocery item -->
