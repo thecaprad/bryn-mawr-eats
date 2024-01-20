@@ -70,6 +70,7 @@
 <template>
   <div class="modal-base" @click="showModal = false">
     <div class="modal">
+      <h2>Select recipe</h2>
       <div class="modal-option recipe-option" v-for="recipe in recipeList" :key="recipe" @click="makeSelection(recipe)">
         <div>{{ recipe.name }}</div>
         <img :src="recipe.image_url" />

@@ -172,10 +172,11 @@
 </script>
 
 <template>
-  <div class="modal-base" @click="showAddGroceryItemModal = false">
+  <div class="modal-base">
     <div class="modal">
-      <p>Add grocery item</p>
+      <h2>Add grocery item</h2>
       <!-- Select existing grocery item -->
+      <label>Grocery item</label>
       <div class="modal-option">
         <select v-model="selectedGroceryItem">
           <option
@@ -190,14 +191,14 @@
       </div>
 
       <!-- Add new grocery item -->
-      <div class="grocery-option" v-if="!groceryItemSelected">
-        <label for="new-ingredient">New ingredient</label>
+      <label for="new-ingredient" class="modal-label" v-if="!groceryItemSelected">New ingredient</label>
+      <div class="modal-option" v-if="!groceryItemSelected">
         <input id="new-ingredient" type="text" v-model="newItemName" />
       </div>
 
       <!-- Existing aisle for new grocery item -->
-      <div class="grocery-option" v-if="!groceryItemSelected">
-        <label>Grocery aisle</label>
+      <label class="modal-label" v-if="!groceryItemSelected">Grocery aisle</label>
+      <div class="modal-option" v-if="!groceryItemSelected">
         <select id="aisles" v-model="selectedAisle">
           <option
             v-for="aisle in aislesList"
@@ -211,20 +212,20 @@
       </div>
 
       <!-- Add new aisle -->
-      <div class="grocery-option" v-if="!groceryItemSelected && !aisleSelected">
-        <label for="new-aisle">New aisle</label>
+      <label for="new-aisle" class="modal-label" v-if="!groceryItemSelected && !aisleSelected">New aisle</label>
+      <div class="modal-option" v-if="!groceryItemSelected && !aisleSelected">
         <input id="new-aisle" type="text" v-model="newAisleName" />
       </div>
 
       <!-- Quantity -->
-      <div class="grocery-option">
-        <label for="quantity">Quantity</label>
+      <label for="quantity" class="modal-label">Quantity</label>
+      <div class="modal-option">
         <input id="quantity" type="number" v-model="quantity" />
       </div>
 
       <!-- Select existing unit -->
-      <div class="grocery-option">
-        <label for="unit">Unit</label>
+      <label for="unit" class="modal-label">Unit</label>
+      <div class="modal-option">
         <select id="unit" v-model="selectedUnit">
           <option
             v-for="unit in unitsList"
@@ -238,8 +239,8 @@
       </div>
 
       <!-- Add new unit -->
-      <div class="grocery-option" v-if="!unitSelected">
-        <label for="new-unit">New unit</label>
+      <label for="new-unit" class="modal-label" v-if="!unitSelected">New unit</label>
+      <div class="modal-option" v-if="!unitSelected">
         <input id="new-unit" type="text" v-model="newUnitName" />
       </div>
 

@@ -36,6 +36,52 @@
       padding: 40px;
     }
 
+    h2 {
+      font-family: var(--garamond);
+      font-weight: 600;
+      margin-top: 0;
+    }
+
+    label {
+      width: 100%;
+      text-align: left;
+      display: block;
+      padding-left: 0.75rem;
+      padding-top: 0.75rem;
+      font-size: 0.6rem;
+      font-family: var(--inter);
+      font-weight: 800;
+      color: #3b322c;
+    }
+
+    select,
+    input {
+      width: 100%;
+      background-color: white;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.2s linear;
+      font-family: var(--garamond);
+      font-size: 1rem;
+    }
+
+    button {
+      padding: 0.5rem;
+      width: 150px;
+      background-color: var(--light-green);
+      border-radius: 5px;
+      box-shadow: none;
+      border: none;
+      color: var(--white);
+      margin-top: 15px;
+      font-size: 0.9rem;
+      transition: background-color 0.2s linear;
+
+      &:hover {
+        background-color: #8fd2bb;
+      }
+    }
+
     .modal-option {
       background-color: var(--white);
       color: var(--black);
@@ -50,6 +96,7 @@
       text-align: left;
       justify-content: space-between;
       cursor: pointer;
+      transition: background-color 0.2s linear;
       // border: solid var(--black) 1px;
 
       .info {
@@ -61,6 +108,11 @@
       &:hover {
         background-color: #72bda3;
         color: white;
+        input,
+        select {
+          background-color: #72bda3;
+          color: white;
+        }
       }
     }
     .active {
@@ -75,11 +127,5 @@
         border-radius: 5px;
       }
     }
-  }
-
-  label {
-    font-size: 0.8rem;
-    font-weight: 400;
-    font-family: var(--inter);
   }
 }
