@@ -10,13 +10,17 @@
   const props = defineProps(['day', 'recipe']);
   const { day, recipe } = toRefs(props);
 
+  const handleSelect = (recipe, day) => {
+    showModal.value = !showModal.value;
+    selectedDay.value = day;
+  };
+
   const handleRecipeSwapOrDelete = (recipe, day) => {
     // clear existing recipe
     if (recipe.name) {
       groceryListStore.clearMealByDayName(day);
     } else {
-      showModal.value = !showModal.value;
-      selectedDay.value = day;
+      handleSelect(recipe, day);
     }
   };
 </script>
@@ -32,6 +36,9 @@
     </div>
     <div v-else-if="recipe.name == 'Panic'" class="panic">
       <SvgPanic></SvgPanic>
+    </div>
+    <div v-else-if="!recipe.name" class="panic" @click="handleSelect(recipe, day)">
+      <SvgUtensils></SvgUtensils>
     </div>
     <img :src="recipe.image_url" v-else />
     <div class="recipe-info">
