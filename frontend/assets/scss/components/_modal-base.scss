@@ -122,6 +122,9 @@
           background-color: #72bda3;
           color: white;
         }
+        svg path {
+          fill: white;
+        }
       }
     }
     .active {
@@ -129,11 +132,17 @@
     }
 
     .recipe-option {
-      img {
+      img,
+      svg {
         height: 50px;
         width: 50px;
         object-fit: cover;
         border-radius: 5px;
+      }
+
+      svg path {
+        fill: var(--light-green);
+        transition: fill 0.2s linear;
       }
     }
   }

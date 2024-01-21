@@ -8,7 +8,7 @@ from .serializers import RecipeSerializer, GroceryItemSerializer, IngredientUnit
 
 
 class RecipeAPIView(generics.ListAPIView):
-  queryset = Recipe.objects.all()
+  queryset = Recipe.objects.all().order_by('name')
   serializer_class = RecipeSerializer
 
 class RecipeDetailView(generics.RetrieveAPIView):

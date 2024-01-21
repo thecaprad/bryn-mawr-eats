@@ -73,7 +73,9 @@
       <h2>Select recipe</h2>
       <div class="modal-option recipe-option" v-for="recipe in recipeList" :key="recipe" @click="makeSelection(recipe)">
         <div>{{ recipe.name }}</div>
-        <img :src="recipe.image_url" />
+        <SvgPanic v-if="recipe.name == 'Panic'"></SvgPanic>
+        <SvgTakeout v-else-if="recipe.name == 'Takeout'"></SvgTakeout>
+        <img v-else :src="recipe.image_url" />
       </div>
     </div>
   </div>

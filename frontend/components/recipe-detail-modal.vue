@@ -24,7 +24,6 @@
   const recipeData = ref({});
   // Watch for response to load.
   watch(recipe, (newRecipeData) => {
-    console.log(newRecipeData);
     recipeData.value = newRecipeData;
   });
 </script>
@@ -39,9 +38,11 @@
         </div>
         <div class="recipe-info">
           <div class="stats">
-            <span><b>Prep time:</b> {{ recipeData.prep_time }} minutes</span>
+            <span v-if="recipeData.prep_time"><b>Prep time:</b> {{ recipeData.prep_time }} minutes</span>
             <span><b>Cook time:</b> {{ recipeData.cook_time }} minutes</span>
-            <span><a :href="recipeData.source_url" target="_blank">Cooking instructions</a></span>
+            <span v-if="recipeData.source_url"
+              ><a :href="recipeData.source_url" target="_blank">Cooking instructions</a></span
+            >
           </div>
           <h3>Ingredients</h3>
           <div v-for="ingredient in recipeData.recipe_ingredients" :key="ingredient" class="ingredient">
