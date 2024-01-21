@@ -76,6 +76,8 @@
       margin-top: 15px;
       font-size: 0.9rem;
       transition: background-color 0.2s linear;
+      display: flex;
+      justify-content: center;
 
       &:hover {
         background-color: #8fd2bb;
