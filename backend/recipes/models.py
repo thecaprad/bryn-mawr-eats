@@ -42,6 +42,14 @@ class RecipeIngredient(models.Model):
     quantity = models.FloatField(blank=False, null=False, default=1)
     unit = models.ForeignKey(IngredientUnit, blank=True, null=True, on_delete=models.SET_NULL)
 
+    @property
+    def grocery_item_name(self):
+       return self.grocery_item.name
+
+    @property
+    def unit_name(self):
+       return self.unit.name
+
     def __str__(self):
         return f"{self.recipe} — {self.grocery_item}"
 

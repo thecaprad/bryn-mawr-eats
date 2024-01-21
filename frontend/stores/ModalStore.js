@@ -4,11 +4,13 @@ import { defineStore } from 'pinia';
 export const useModalStore = defineStore('ModalStore', () => {
   const showModal = ref(false);
   const showUnitConversionModal = ref(false);
+  const showAddGroceryItemModal = ref(false);
+  const showRecipeDetailModal = ref(false);
+  const selectedRecipeId = ref(null);
   const neededConversionUnits = ref([]);
   const largerUnit = ref('');
   const conversionFactor = ref(0);
   const selectedDay = ref('');
-  const showAddGroceryItemModal = ref(false);
   const defaultAisle = ref('');
 
   watch(showModal, (newValue) => {
@@ -27,14 +29,32 @@ export const useModalStore = defineStore('ModalStore', () => {
     }
   });
 
+  watch(showUnitConversionModal, (newValue) => {
+    if (newValue) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+  });
+
+  watch(showRecipeDetailModal, (newValue) => {
+    if (newValue) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+  });
+
   return {
     showModal,
     showUnitConversionModal,
+    showAddGroceryItemModal,
+    showRecipeDetailModal,
+    selectedRecipeId,
     neededConversionUnits,
     largerUnit,
     conversionFactor,
     selectedDay,
-    showAddGroceryItemModal,
     defaultAisle,
   };
 });

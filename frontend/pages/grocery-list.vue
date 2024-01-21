@@ -2,11 +2,18 @@
   import { storeToRefs } from 'pinia';
   import { useGroceryListStore } from '../../stores/GroceryListStore';
   import { useModalStore } from '../../stores/ModalStore';
+  const { prettyQuantity } = useUtils();
 
   const groceryListStore = useGroceryListStore();
 
-  const { showModal, showUnitConversionModal, neededConversionUnits, showAddGroceryItemModal, defaultAisle } =
-    storeToRefs(useModalStore());
+  const {
+    showModal,
+    showUnitConversionModal,
+    neededConversionUnits,
+    showAddGroceryItemModal,
+    showRecipeDetailModal,
+    defaultAisle,
+  } = storeToRefs(useModalStore());
   const { mealPlan, aisles, recipeIngredients, selectedRecipeIDs, getAllItemsNestedByAisle } =
     storeToRefs(groceryListStore);
 
@@ -25,17 +32,11 @@
       }
     }
   };
-
-  const prettyQuantity = (quantity) => {
-    if (Math.round(quantity) !== quantity) {
-      return quantity.toFixed(2);
-    }
-    return quantity;
-  };
 </script>
 
 <template>
   <div class="grocery-list">
+    <RecipeDetailModal v-if="showRecipeDetailModal"></RecipeDetailModal>
     <RecipeModal v-if="showModal"></RecipeModal>
     <AddGroceryItemModal v-if="showAddGroceryItemModal"></AddGroceryItemModal>
     <UnitConversionModal v-if="showUnitConversionModal" @conversionMade="handleCreateGroceryList"></UnitConversionModal>

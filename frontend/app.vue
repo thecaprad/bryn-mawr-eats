@@ -1,7 +1,8 @@
 <script setup>
   import { storeToRefs } from 'pinia';
   import { useModalStore } from '/stores/ModalStore';
-  const { showModal, showAddGroceryItemModal, showUnitConversionModal } = storeToRefs(useModalStore());
+  const { showModal, showAddGroceryItemModal, showUnitConversionModal, showRecipeDetailModal, selectedRecipeId } =
+    storeToRefs(useModalStore());
 
   // Close modals globally on ESC keydown.
   onMounted(() => {
@@ -11,6 +12,8 @@
         showModal.value = false;
         showAddGroceryItemModal.value = false;
         showUnitConversionModal.value = false;
+        showRecipeDetailModal.value = false;
+        selectedRecipeId.value = null;
       }
     });
   });

@@ -5,7 +5,7 @@
 
   const groceryListStore = useGroceryListStore();
 
-  const { showModal, selectedDay } = storeToRefs(useModalStore());
+  const { showModal, selectedDay, showRecipeDetailModal, selectedRecipeId } = storeToRefs(useModalStore());
 
   const props = defineProps(['day', 'recipe']);
   const { day, recipe } = toRefs(props);
@@ -40,7 +40,14 @@
     <div v-else-if="!recipe.name" class="panic" @click="handleSelect(recipe, day)">
       <SvgUtensils></SvgUtensils>
     </div>
-    <img :src="recipe.image_url" v-else />
+    <img
+      :src="recipe.image_url"
+      @click="
+        showRecipeDetailModal = true;
+        selectedRecipeId = recipe.id;
+      "
+      v-else
+    />
     <div class="recipe-info">
       <div>
         <div class="name-and-icon">

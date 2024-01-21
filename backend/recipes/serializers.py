@@ -17,13 +17,15 @@ class IngredientUnitSerializer(serializers.ModelSerializer):
     model = IngredientUnit
     fields = ('id', 'name')
 
-class RecipeIngredeintSerializer(serializers.ModelSerializer):
+class RecipeIngredientSerializer(serializers.ModelSerializer):
+  grocery_item_name = serializers.ReadOnlyField()
+  unit_name = serializers.ReadOnlyField()
   class Meta:
     model = RecipeIngredient
-    fields = ('grocery_item', 'quantity', 'unit')
+    fields = ('grocery_item', 'grocery_item_name', 'quantity', 'unit', 'unit_name')
 
 class RecipeSerializer(serializers.ModelSerializer):
-  # ingredients = RecipeIngredeintSerializer(many=True, read_only=True)
+  recipe_ingredients = RecipeIngredientSerializer(many=True, read_only=True)
   class Meta:
     model = Recipe
-    fields = ('id', 'name', 'prep_time', 'cook_time', 'source_url', 'image_url')
+    fields = ('id', 'name', 'prep_time', 'cook_time', 'source_url', 'image_url', 'recipe_ingredients')
