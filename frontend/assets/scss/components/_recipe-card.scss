@@ -10,6 +10,7 @@
     cursor: pointer;
   }
 
+  .make-selection,
   .takeout,
   .panic {
     border-radius: 10%;
@@ -17,6 +18,7 @@
     justify-content: center;
     align-items: center;
     height: 12rem;
+    cursor: pointer;
 
     svg {
       fill: var(--white);
@@ -24,14 +26,16 @@
     }
   }
 
+  .make-selection {
+    background-color: var(--light-green);
+  }
+
   .takeout {
     background-color: var(--gray-text);
-    cursor: pointer;
   }
 
   .panic {
     background-color: #e1da76;
-    cursor: pointer;
   }
 
   h2 {

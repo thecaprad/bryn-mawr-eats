@@ -33,7 +33,7 @@
     <div v-else-if="recipe.name == 'Panic'" class="panic">
       <SvgPanic></SvgPanic>
     </div>
-    <div v-else-if="!recipe.name" class="panic" @click="handleSelect(recipe, day)">
+    <div v-else-if="!recipe.name" class="make-selection" @click="handleSelect(recipe, day)">
       <SvgUtensils></SvgUtensils>
     </div>
     <img
