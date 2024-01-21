@@ -15,7 +15,7 @@
   const selectedGroceryItem = ref({ name: 'New grocery item', id: 0 });
   const selectedUnit = ref({ name: 'New unit', id: 0 });
   const selectedAisle = ref({ name: 'New aisle', id: 0 });
-  const quantity = ref(0);
+  const quantity = ref(1);
   const newItemName = ref('');
   const newAisleName = ref('');
   const newUnitName = ref('');
@@ -193,7 +193,7 @@
       <!-- Add new grocery item -->
       <label for="new-ingredient" class="modal-label" v-if="!groceryItemSelected">New item name</label>
       <div class="modal-option" v-if="!groceryItemSelected">
-        <input id="new-ingredient" type="text" v-model="newItemName" />
+        <input id="new-ingredient" type="text" v-model="newItemName" placeholder="New grocery item" />
       </div>
 
       <!-- Existing aisle for new grocery item -->
@@ -214,13 +214,13 @@
       <!-- Add new aisle -->
       <label for="new-aisle" class="modal-label" v-if="!groceryItemSelected && !aisleSelected">New aisle</label>
       <div class="modal-option" v-if="!groceryItemSelected && !aisleSelected">
-        <input id="new-aisle" type="text" v-model="newAisleName" />
+        <input id="new-aisle" type="text" v-model="newAisleName" placeholder="New aisle" />
       </div>
 
       <!-- Quantity -->
       <label for="quantity" class="modal-label">Quantity</label>
       <div class="modal-option">
-        <input id="quantity" type="number" v-model="quantity" />
+        <input id="quantity" type="number" v-model="quantity" min="0" max="50" />
       </div>
 
       <!-- Select existing unit -->
@@ -241,7 +241,7 @@
       <!-- Add new unit -->
       <label for="new-unit" class="modal-label" v-if="!unitSelected">New unit</label>
       <div class="modal-option" v-if="!unitSelected">
-        <input id="new-unit" type="text" v-model="newUnitName" />
+        <input id="new-unit" type="text" v-model="newUnitName" placeholder="New unit" />
       </div>
 
       <button @click="handleSubmission()" class="submit">Submit</button>
