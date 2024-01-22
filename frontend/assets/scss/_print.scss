@@ -1,0 +1,80 @@
+@media print {
+  body {
+    width: 3.25in;
+    height: 5in;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    padding-left: 10px;
+    padding-top: 10px;
+    color: black;
+    position: absolute;
+
+    h1 {
+      display: none;
+    }
+  }
+
+  .header {
+    background-color: white;
+    padding: 0;
+    a {
+      div {
+        color: black;
+        font-size: 16pt;
+        width: auto;
+      }
+      svg {
+        height: 16pt;
+      }
+    }
+    .grocery-list-link {
+      display: none;
+    }
+  }
+  // Hide unwanted elements.
+  .grocery-list {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    .recipe-week,
+    .buttons {
+      display: none;
+    }
+    .aisles {
+      width: 100%;
+      gap: 5%;
+      flex-direction: column;
+      height: 5in;
+      .aisle {
+        width: 53%;
+
+        h3 {
+          text-align: left;
+          margin-top: 4pt;
+          margin-bottom: 2pt;
+          font-size: 9pt;
+        }
+        button {
+          display: none;
+        }
+
+        .ingredient {
+          padding-bottom: 2px;
+          svg {
+            display: none;
+          }
+
+          span,
+          .name {
+            font-size: 8pt;
+          }
+
+          .unit {
+            padding-left: 4pt;
+          }
+        }
+      }
+    }
+  }
+}

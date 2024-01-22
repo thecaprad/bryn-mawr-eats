@@ -71,7 +71,7 @@
         <div v-for="item in Object.values(aisleItem)[0]" :key="item" class="ingredient">
           <span class="name">{{ item.name }}</span>
           <span>{{ prettyQuantity(item.quantity) }}</span>
-          <span v-if="item.unit != 'whole'">{{ item.unit }}</span>
+          <span v-if="item.unit != 'whole'" class="unit">{{ item.unit }}</span>
           <svg-x @click="groceryListStore.removeIngredient(item)"></svg-x>
         </div>
         <button
