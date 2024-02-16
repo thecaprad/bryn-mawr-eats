@@ -22,11 +22,17 @@ After the build is complete, run `docker-compose up`.
 
 Once the project is running, open up an interactive terminal in the `web` container.
 
+Run migrations:
+
+`python manage.py migrate`
+
+![Run migrations](documentation_images/migrate.png?raw=true)
+
 Create a superuser for Django using the `createsuperuser` prompt:
 
 `python manage.py createsuperuser`
 
-![Web terminal](documentation_images/createsuperuser.png?raw=true)
+![Create superuser](documentation_images/createsuperuser.png?raw=true)
 
 Login to the Django admin: `http://localhost:8000/admin/`
 
